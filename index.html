@@ -939,10 +939,26 @@
                     addRow("Development", selectedServices.development.name, selectedServices.development.price);
                 }
 
+                // if (selectedServices.maintenance) {
+                //      const totalMaintainCost = selectedServices.maintenance.price * 12;
+                //     addRow("Maintenance", `${selectedServices.maintenance.name} x 12`,totalMaintainCost);
+                // }
                 if (selectedServices.maintenance) {
-                     const totalMaintainCost = selectedServices.maintenance.price * 12;
-                    addRow("Maintenance", `${selectedServices.maintenance.name} x 12`,totalMaintainCost);
+                    debugger
+                    //  const isMonthly = selectedServices.maintenance.type === 'monthly';
+                    //  const isMonthly =selectedServices.maintenance.type.includes('monthly') ? 'true' : 'false';
+                    const isMonthly = selectedServices.maintenance.type.includes('monthly');
+
+                    const price = selectedServices.maintenance.price;
+                    const totalMaintainCost = isMonthly ? price * 12 : price;
+                    const label = isMonthly
+                        ? `${selectedServices.maintenance.name} x 12`
+                        : selectedServices.maintenance.name;
+
+                    addRow("Maintenance", label, totalMaintainCost);
                 }
+
+                
                  if (selectedServices.framework) {
                     addRow("Framework", selectedServices.framework.name, selectedServices.framework.price);
                 }
@@ -1150,19 +1166,19 @@ function numberToWordsIndian(num) {
   });
 </script> -->
 <script>
-  const frameworkCheckboxes = document.querySelectorAll('.addon-item input[type="checkbox"]');
+  const frameworkCheckboxes = document.querySelectorAll('.plan-option input[type="checkbox"]');
 
   frameworkCheckboxes.forEach(checkbox => {
     checkbox.addEventListener('change', function () {
       frameworkCheckboxes.forEach(cb => {
-        const parent = cb.closest('.addon-item');
+        const parent = cb.closest('.plan-option');
         if (cb !== this) {
           cb.checked = false;
           parent?.classList.remove('selected');
         }
       });
 
-      const currentParent = this.closest('.addon-item');
+      const currentParent = this.closest('.plan-option');
       if (this.checked) {
         currentParent?.classList.add('selected');
       } else {
