@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Services Calculator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #f1f5f9;
+            --accent-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --purple-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --blue-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        }
+        
+        body {
+            background: var(--purple-gradient);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .main-container {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .header-section {
+            background: var(--blue-gradient);
+            color: white;
+            padding: 50px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header-section::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: white;
+            border-radius: 25px 25px 0 0;
+        }
+        
+        .service-category {
+            border: 3px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: all 0.4s ease;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 5px;
+            background: var(--blue-gradient);
+            transition: left 0.4s ease;
+        }
+        
+        .service-category:hover::before {
+            left: 0;
+        }
+        
+        .service-category:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.15);
+            border-color: var(--primary-color);
+        }
+        
+        .category-header {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.4em;
+        }
+        
+        .service-option {
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        .service-option:hover {
+            border-color: var(--primary-color);
+            background: linear-gradient(145deg, #f8faff 0%, #f1f5ff 100%);
+            transform: translateX(5px);
+        }
+        
+        .service-option.selected {
+            border-color: var(--accent-color);
+            background: linear-gradient(145deg, #f0fdf4 0%, #dcfce7 100%);
+            transform: translateX(8px);
+        }
+        
+        .service-option.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 20px;
+            animation: checkmark 0.3s ease-in-out;
+        }
+        
+        @keyframes checkmark {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .pricing-tag {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+        
+        .summary-panel {
+            background: linear-gradient(145deg, #f8faff 0%, #e0f2fe 100%);
+            border-radius: 20px;
+            padding: 35px;
+            position: sticky;
+            top: 20px;
+            border: 2px solid rgba(99, 102, 241, 0.1);
+        }
+        
+        .total-cost-display {
+            background: var(--blue-gradient);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .total-cost-display::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .btn-marketing {
+            background: var(--blue-gradient);
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-marketing:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+        
+        .platform-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .chip {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+        
+        .addon-section {
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        .addon-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .addon-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .popular-tag {
+            position: absolute;
+            top: -5px;
+            right: 20px;
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.8em;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        
+        .feature-list li {
+            padding: 3px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+        }
+        
+        .feature-list li::before {
+            content: '•';
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .service-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            background: #f1f5f9;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .tab-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-container">
+            <div class="header-section">
+                <div class="container">
+                    <h1><i class="fas fa-bullhorn"></i> Marketing Services Calculator</h1>
+                    <p class="lead mb-0">Build your perfect marketing strategy with transparent pricing</p>
+                </div>
+            </div>
+            
+            <div class="container py-5">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <!-- Social Media Marketing -->
+                        <div class="service-category" id="smmCategory">
+                            <h3 class="category-header"><i class="fab fa-facebook"></i> Social Media Marketing (SMM)</h3>
+                            
+                            <div class="service-tabs">
+                                <div class="tab-btn active" onclick="showSMMTab('platforms')">Platforms</div>
+                                <div class="tab-btn" onclick="showSMMTab('services')">Service Types</div>
+                                <div class="tab-btn" onclick="showSMMTab('plans')">Pricing Plans</div>
+                            </div>
+                            
+                            <div id="smm-platforms" class="tab-content">
+                                <h5>Select Platforms:</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="service-option" onclick="toggleSMMPlatform('facebook', 8999)">
+                                            <h6><i class="fab fa-facebook-f"></i> Facebook Marketing</h6>
+                                            <div class="platform-chips">
+                                                <span class="chip">Posts & Stories</span>
+                                                <span class="chip">Paid Campaigns</span>
+                                                <span class="chip">Analytics</span>
+                                            </div>
+                                            <div class="pricing-tag">₹8,999/month</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="service-option position-relative" onclick="toggleSMMPlatform('instagram', 9999)">
+                                            <div class="popular-tag">Most Popular</div>
+                                            <h6><i class="fab fa-instagram"></i> Instagram Marketing</h6>
+                                            <div class="platform-chips">
+                                                <span class="chip">Content Creation</span>
+                                                <span class="chip">Reels & IGTV</span>
+                                                <span class="chip">Stories</span>
+                                            </div>
+                                            <div class="pricing-tag">₹9,999/month</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="service-option" onclick="toggleSMMPlatform('twitter', 6999)">
+                                            <h6><i class="fab fa-twitter"></i> Twitter Marketing</h6>
+                                            <div class="platform-chips">
+                                                <span class="chip">Tweet Campaigns</span>
+                                                <span class="chip">Engagement</span>
+                                                <span class="chip">Trends</span>
+                                            </div>
+                                            <div class="pricing-tag">₹6,999/month</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="service-option" onclick="toggleSMMPlatform('linkedin', 12999)">
+                                            <h6><i class="fab fa-linkedin-in"></i> LinkedIn Marketing</h6>
+                                            <div class="platform-chips">
+                                                <span class="chip">B2B Content</span>
+                                                <span class="chip">Lead Gen</span>
+                                                <span class="chip">Professional Network</span>
+                                            </div>
+                                            <div class="pricing-tag">₹12,999/month</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="service-option" onclick="toggleSMMPlatform('youtube', 15999)">
+                                            <h6><i class="fab fa-youtube"></i> YouTube Marketing</h6>
+                                            <div class="platform-chips">
+                                                <span class="chip">Video Content</span>
+                                                <span class="chip">Channel Growth</span>
+                                                <span class="chip">Monetization</span>
+                                            </div>
+                                            <div class="pricing-tag">₹15,999/month</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="smm-services" class="tab-content" style="display:none;">
+                                <h5>Service Types:</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="service-option" onclick="toggleSMMService('content_creation', 5999)">
+                                            <h6>Content Creation</h6>
+                                            <ul class="feature-list">
+                                                <li>Custom graphics & videos</li>
+                                                <li>Copywriting</li>
+                                                <li>Content calendar</li>
+                                            </ul>
+                                            <div class="pricing-tag">₹5,999/month</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="service-option" onclick="toggleSMMService('paid_campaigns', 7999)">
+                                            <h6>Paid Ad Campaigns</h6>
+                                            <ul class="feature-list">
+                                                <li>Campaign setup & optimization</li>
+                                                <li>A/B testing</li>
+                                                <li>ROI tracking</li>
+                                            </ul>
+                                            <div class="pricing-tag">₹7,999/month</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="service-option" onclick="toggleSMMService('account_management', 4999)">
+                                            <h6>Account Management</h6>
+                                            <ul class="feature-list">
+                                                <li>Daily posting & scheduling</li>
+                                                <li>Community engagement</li>
+                                                <li>Profile optimization</li>
+                                            </ul>
+                                            <div class="pricing-tag">₹4,999/month</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="service-option" onclick="toggleSMMService('analytics', 3999)">
+                                            <h6>Analytics & Reporting</h6>
+                                            <ul class="feature-list">
+                                                <li>Performance metrics</li>
+                                                <li>Monthly reports</li>
+                                                <li>Growth insights</li>
+                                            </ul>
+                                            <div class="pricing-tag">₹3,999/month</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="smm-plans" class="tab-content" style="display:none;">
+                                <h5>Subscription Plans:</h5>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="service-option" onclick="selectSMMPlan('basic', 12999)">
+                                            <h6>Basic Plan</h6>
+                                            <ul class="feature-list">
+                                                <li>2 Platforms</li>
+                                                <li>10 Posts/month</li>
+                                                <li>Basic analytics</li>
+                                            </ul>
+                                            <div class="pricing-tag">₹12,999/month</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="service-option position-relative" onclick="selectSMMPlan('premium', 24999)">
+                                            <div class="popular-tag">Recommended</div>
+                                            <h6>Premium Plan</h6>
+                                            <ul class="feature-list">
+                                                <li>4 Platforms</li>
+                                                <li>25 Posts/month</li>
+                                                <li>Paid campaigns included</li>
+                                                <li>Advanced analytics</li>
+                                            </ul>
+                                            <div class="pricing-tag">₹24,999/month</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="service-option" onclick="selectSMMPlan('enterprise', 49999)">
+                                            <h6>Enterprise Plan</h6>
+                                            <ul class="feature-list">
+                                                <li>All Platforms</li>
+                                                <li>Unlimited Posts</li>
+                                                <li>Dedicated manager</li>
+                                                <li>Custom strategy</li>
+                                            </ul>
+                                            <div class="pricing-tag">₹49,999/month</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="addon-section">
+                                <h6><i class="fas fa-plus"></i> SMM Add-ons:</h6>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="addon-item">
+                                            <label>
+                                                <input type="checkbox" onchange="toggleSMMAddon('influencer', 8999)" class="me-2">
+                                                Influencer Collaboration
+                                            </label>
+                                            <span class="pricing-tag">₹8,999/campaign</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="addon-item">
+                                            <label>
+                                                <input type="checkbox" onchange="toggleSMMAddon('hashtag_research', 1999)" class="me-2">
+                                                Hashtag Research
+                                            </label>
+                                            <span class="pricing-tag">₹1,999/month</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email Marketing -->
+                        <div class="service-category" id="emailCategory">
+                            <h3 class="category-header"><i class="fas fa-envelope"></i> Email Marketing</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="service-option" onclick="selectEmailService('newsletter', 6999)">
+                                        <h6>Newsletter Design & Automation</h6>
+                                        <ul class="feature-list">
+                                            <li>Custom email templates</li>
+                                            <li>Automated sequences</li>
+                                            <li>Drip campaigns</li>
+                                        </ul>
+                                        <div class="pricing-tag">₹6,999/month</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="service-option" onclick="selectEmailService('campaign', 4999)">
+                                        <h6>Campaign Setup & Management</h6>
+                                        <ul class="feature-list">
+                                            <li>Campaign strategy</li>
+                                            <li>List segmentation</li>
+                                            <li>Send optimization</li>
+                                        </ul>
+                                        <div class="pricing-tag">₹4,999/campaign</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="service-option" onclick="selectEmailService('list_management', 3999)">
+                                        <h6>Subscriber List Management</h6>
+                                        <ul class="feature-list">
+                                            <li>List cleanup & validation</li>
+                                            <li>Opt-in form creation</li>
+                                            <li>GDPR compliance</li>
+                                        </ul>
+                                        <div class="pricing-tag">₹3,999/month</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="service-option" onclick="selectEmailService('ab_testing', 2999)">
+                                        <h6>A/B Testing & Analytics</h6>
+                                        <ul class="feature-list">
+                                            <li>Subject line testing</li>
+                                            <li>Content optimization</li>
+                                            <li>Performance reports</li>
+                                        </ul>
+                                        <div class="pricing-tag">₹2,999/month</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Branding Services -->
+                        <div class="service-category" id="brandingCategory">
+                            <h3 class="category-header"><i class="fas fa-palette"></i> Branding Services</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="service-option" onclick="selectBrandingService('strategy', 25999)">
+                                        <h6>Brand Strategy Consulting</h6>
+                                        <ul class="feature-list">
+                                            <li>Brand positioning workshop</li>
+                                            <li>Competitive analysis</li>
+                                            <li>Target audience research</li>
+                                            <li>Brand messaging framework</li>
+                                        </ul>
+                                        <div class="pricing-tag">₹25,999 (One-time)</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="service-option position-relative" onclick="selectBrandingService('identity', 45999)">
+                                        <div class="popular-tag">Complete Package</div>
+                                        <h6>Brand Identity Design</h6>
+                                        <ul class="feature-list">
+                                            <li>Color scheme development</li>
+                                            <li>Typography selection</li>
+                                            <li>Brand voice guidelines</li>
+                                            <li>Visual identity system</li>
+                                        </ul>
+                                        <div class="pricing-tag">₹45,999 (One-time)</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="service-option" onclick="selectBrandingService('guidelines', 15999)">
+                                        <h6>Brand Guidelines Documentation</h6>
+                                        <ul class="feature-list">
+                                            <li>Logo usage guidelines</li>
+                                            <li>Brand application examples</li>
+                                            <li>Do's and don'ts</li>
+                                        </ul>
+                                        <div class="pricing-tag">₹15,999 (One-time)</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="service-option" onclick="selectContentService('guest_posting', 9999)">
+                                        <h6>Guest Posting & Outreach</h6>
+                                        <ul class="feature-list">
+                                            <li>5 Guest posts per month</li>
+                                            <li>Site outreach</li>
+                                            <li>Link building</li>
+                                            <li>Authority building</li>
+                                        </ul>
+                                        <div class="pricing-tag">₹9,999/month</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Paid Advertising Management -->
+                        <div class="service-category" id="paidAdsCategory">
+                            <h3 class="category-header"><i class="fas fa-ad"></i> Paid Advertising Management</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="service-option position-relative" onclick="selectPaidAdsService('google_ads', 18999)">
+                                        <div class="popular-tag">High ROI</div>
+                                        <h6>Google Ads Management</h6>
+                                        <ul class="feature-list">
+                                            <li>Campaign setup & optimization</li>
+                                            <li>Keyword research</li>
+                                            <li>Landing page optimization</li>
+                                            <li>Performance tracking</li>
+                                        </ul>
+                                        <div class="pricing-tag">₹18,999/month</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="service-option" onclick="selectPaidAdsService('facebook_ads', 15999)">
+                                        <h6>Facebook Ads Management</h6>
+                                        <ul class="feature-list">
+                                            <li>Audience targeting</li>
+                                            <li>Creative development</li>
+                                            <li>A/B testing</li>
+                                            <li>Conversion optimization</li>
+                                        </ul>
+                                        <div class="pricing-tag">₹15,999/month</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="service-option" onclick="selectPaidAdsService('linkedin_ads', 22999)">
+                                        <h6>LinkedIn Ads Management</h6>
+                                        <ul class="feature-list">
+                                            <li>B2B lead generation</li>
+                                            <li>Professional targeting</li>
+                                            <li>Sponsored content</li>
+                                            <li>InMail campaigns</li>
+                                        </ul>
+                                        <div class="pricing-tag">₹22,999/month</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="service-option" onclick="selectPaidAdsService('roi_analysis', 8999)">
+                                        <h6>Budget Planning & ROI Analysis</h6>
+                                        <ul class="feature-list">
+                                            <li>Campaign budget optimization</li>
+                                            <li>ROI tracking & reporting</li>
+                                            <li>Performance forecasting</li>
+                                            <li>Cost per acquisition analysis</li>
+                                        </ul>
+                                        <div class="pricing-tag">₹8,999/month</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cost Summary Panel -->
+                    <div class="col-lg-4">
+                        <div class="summary-panel">
+                            <h4><i class="fas fa-calculator"></i> Marketing Investment Summary</h4>
+                            
+                            <div id="selectedMarketingServices">
+                                <div class="mb-3"><small class="text-muted">Select marketing services to see pricing breakdown</small></div>
+                            </div>
+                            
+                            <hr>
+                            
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>One-time Investments:</span>
+                                <span class="fw-bold" id="oneTimeMarketingCost">₹0</span>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Monthly Recurring:</span>
+                                <span class="fw-bold" id="monthlyMarketingCost">₹0</span>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Campaign-based:</span>
+                                <span class="fw-bold" id="campaignMarketingCost">₹0</span>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mb-3">
+                                <span>Annual Projection:</span>
+                                <span class="fw-bold" id="annualMarketingCost">₹0</span>
+                            </div>
+                            
+                            <div class="total-cost-display">
+                                <h5 class="mb-2">Total Marketing Investment</h5>
+                                <h2 class="mb-2" id="totalMarketingCost">₹0</h2>
+                                <small>First year estimate (excluding ad spend)</small>
+                            </div>
+                            
+                            <div class="mt-4 d-grid gap-2">
+                                <button class="btn btn-marketing text-white" onclick="saveMarketingQuote()">
+                                    <i class="fas fa-bookmark"></i> Save Marketing Plan
+                                </button>
+                                <button class="btn btn-outline-primary" onclick="exportMarketingQuote()">
+                                    <i class="fas fa-file-pdf"></i> Export as PDF
+                                </button>
+                                <button class="btn btn-outline-success" onclick="emailMarketingQuote()">
+                                    <i class="fas fa-paper-plane"></i> Email Quote
+                                </button>
+                                <button class="btn btn-outline-info" onclick="scheduleConsultation()">
+                                    <i class="fas fa-calendar"></i> Schedule Consultation
+                                </button>
+                            </div>
+                            
+                            <div class="mt-4 p-3 bg-light rounded">
+                                <small class="text-muted">
+                                    <i class="fas fa-info-circle"></i> 
+                                    Prices exclude advertising spend. Free consultation included with any package above ₹25,000.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+// Marketing Services State Management
+let marketingServices = {
+    smm: {
+        platforms: {},
+        services: {},
+        plan: null,
+        addons: {}
+    },
+    email: {},
+    branding: {},
+    logo: {
+        service: null,
+        addons: {}
+    },
+    content: {},
+    paidAds: {}
+};
+
+let marketingCosts = {
+    oneTime: 0,
+    monthly: 0,
+    campaign: 0,
+    annual: 0,
+    total: 0
+};
+
+// SMM Tab Navigation
+function showSMMTab(tabName) {
+    // Hide all tab contents
+    document.querySelectorAll('#smmCategory .tab-content').forEach(tab => {
+        tab.style.display = 'none';
+    });
+    
+    // Remove active class from all tabs
+    document.querySelectorAll('#smmCategory .tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Show selected tab and mark button as active
+    document.getElementById(`smm-${tabName}`).style.display = 'block';
+    event.currentTarget.classList.add('active');
+}
+
+// SMM Platform Selection (Multiple selection allowed)
+function toggleSMMPlatform(platform, price) {
+    const platformNames = {
+        facebook: 'Facebook Marketing',
+        instagram: 'Instagram Marketing', 
+        twitter: 'Twitter Marketing',
+        linkedin: 'LinkedIn Marketing',
+        youtube: 'YouTube Marketing'
+    };
+
+    if (marketingServices.smm.platforms[platform]) {
+        // Remove platform
+        delete marketingServices.smm.platforms[platform];
+        event.currentTarget.classList.remove('selected');
+    } else {
+        // Add platform
+        marketingServices.smm.platforms[platform] = {
+            name: platformNames[platform],
+            price: price
+        };
+        event.currentTarget.classList.add('selected');
+    }
+    
+    updateMarketingCosts();
+}
+
+// SMM Service Selection (Multiple selection allowed)
+function toggleSMMService(service, price) {
+    const serviceNames = {
+        content_creation: 'Content Creation',
+        paid_campaigns: 'Paid Ad Campaigns',
+        account_management: 'Account Management',
+        analytics: 'Analytics & Reporting'
+    };
+
+    if (marketingServices.smm.services[service]) {
+        delete marketingServices.smm.services[service];
+        event.currentTarget.classList.remove('selected');
+    } else {
+        marketingServices.smm.services[service] = {
+            name: serviceNames[service],
+            price: price
+        };
+        event.currentTarget.classList.add('selected');
+    }
+    
+    updateMarketingCosts();
+}
+
+// SMM Plan Selection (Single selection)
+function selectSMMPlan(plan, price) {
+    // Clear previous plan selections
+    document.querySelectorAll('#smm-plans .service-option').forEach(el => {
+        el.classList.remove('selected');
+    });
+    
+    const planNames = {
+        basic: 'Basic SMM Plan',
+        premium: 'Premium SMM Plan',
+        enterprise: 'Enterprise SMM Plan'
+    };
+
+    marketingServices.smm.plan = {
+        type: plan,
+        name: planNames[plan],
+        price: price
+    };
+    
+    event.currentTarget.classList.add('selected');
+    updateMarketingCosts();
+}
+
+// SMM Add-ons
+function toggleSMMAddon(addon, price) {
+    const addonNames = {
+        influencer: 'Influencer Collaboration',
+        hashtag_research: 'Hashtag Research'
+    };
+
+    if (marketingServices.smm.addons[addon]) {
+        delete marketingServices.smm.addons[addon];
+    } else {
+        marketingServices.smm.addons[addon] = {
+            name: addonNames[addon],
+            price: price
+        };
+    }
+    
+    updateMarketingCosts();
+}
+
+// Email Marketing Service Selection
+function selectEmailService(service, price) {
+    const serviceNames = {
+        newsletter: 'Newsletter Design & Automation',
+        campaign: 'Campaign Setup & Management',
+        list_management: 'Subscriber List Management',
+        ab_testing: 'A/B Testing & Analytics'
+    };
+
+    if (marketingServices.email[service]) {
+        delete marketingServices.email[service];
+        event.currentTarget.classList.remove('selected');
+    } else {
+        marketingServices.email[service] = {
+            name: serviceNames[service],
+            price: price,
+            type: service === 'campaign' ? 'campaign' : 'monthly'
+        };
+        event.currentTarget.classList.add('selected');
+    }
+    
+    updateMarketingCosts();
+}
+
+// Branding Service Selection
+function selectBrandingService(service, price) {
+    const serviceNames = {
+        strategy: 'Brand Strategy Consulting',
+        identity: 'Brand Identity Design',
+        guidelines: 'Brand Guidelines Documentation',
+        rebranding: 'Complete Rebranding Package'
+    };
+
+    if (marketingServices.branding[service]) {
+        delete marketingServices.branding[service];
+        event.currentTarget.classList.remove('selected');
+    } else {
+        marketingServices.branding[service] = {
+            name: serviceNames[service],
+            price: price
+        };
+        event.currentTarget.classList.add('selected');
+    }
+    
+    updateMarketingCosts();
+}
+
+// Logo Service Selection
+function selectLogoService(service, price) {
+    // Clear previous selections
+    document.querySelectorAll('#logoCategory .service-option').forEach(el => {
+        el.classList.remove('selected');
+    });
+    
+    const serviceNames = {
+        basic: 'Basic Logo Design',
+        premium: 'Premium Logo Design'
+    };
+
+    marketingServices.logo.service = {
+        type: service,
+        name: serviceNames[service],
+        price: price
+    };
+    
+    event.currentTarget.classList.add('selected');
+    updateMarketingCosts();
+}
+
+// Logo Add-ons
+function toggleLogoAddon(addon, price) {
+    const addonNames = {
+        social_kit: 'Social Media Kit',
+        stationery: 'Business Stationery Design'
+    };
+
+    if (marketingServices.logo.addons[addon]) {
+        delete marketingServices.logo.addons[addon];
+    } else {
+        marketingServices.logo.addons[addon] = {
+            name: addonNames[addon],
+            price: price
+        };
+    }
+    
+    updateMarketingCosts();
+}
+
+// Content Marketing Service Selection
+function selectContentService(service, price) {
+    const serviceNames = {
+        blog_writing: 'Blog Writing & SEO Content',
+        copywriting: 'Professional Copywriting',
+        strategy: 'Content Strategy & Calendar',
+        guest_posting: 'Guest Posting & Outreach'
+    };
+
+    if (marketingServices.content[service]) {
+        delete marketingServices.content[service];
+        event.currentTarget.classList.remove('selected');
+    } else {
+        marketingServices.content[service] = {
+            name: serviceNames[service],
+            price: price,
+            type: service === 'copywriting' || service === 'strategy' ? 'oneTime' : 'monthly'
+        };
+        event.currentTarget.classList.add('selected');
+    }
+    
+    updateMarketingCosts();
+}
+
+// Paid Ads Service Selection
+function selectPaidAdsService(service, price) {
+    const serviceNames = {
+        google_ads: 'Google Ads Management',
+        facebook_ads: 'Facebook Ads Management',
+        linkedin_ads: 'LinkedIn Ads Management',
+        roi_analysis: 'Budget Planning & ROI Analysis'
+    };
+
+    if (marketingServices.paidAds[service]) {
+        delete marketingServices.paidAds[service];
+        event.currentTarget.classList.remove('selected');
+    } else {
+        marketingServices.paidAds[service] = {
+            name: serviceNames[service],
+            price: price
+        };
+        event.currentTarget.classList.add('selected');
+    }
+    
+    updateMarketingCosts();
+}
+
+// Update Marketing Costs
+function updateMarketingCosts() {
+    marketingCosts = { oneTime: 0, monthly: 0, campaign: 0, annual: 0, total: 0 };
+    
+    // SMM Platform costs (monthly)
+    Object.values(marketingServices.smm.platforms).forEach(platform => {
+        marketingCosts.monthly += platform.price;
+    });
+    
+    // SMM Service costs (monthly)
+    Object.values(marketingServices.smm.services).forEach(service => {
+        marketingCosts.monthly += service.price;
+    });
+    
+    // SMM Plan cost (monthly)
+    if (marketingServices.smm.plan) {
+        marketingCosts.monthly += marketingServices.smm.plan.price;
+    }
+    
+    // SMM Add-ons
+    Object.values(marketingServices.smm.addons).forEach(addon => {
+        if (addon.name === 'Influencer Collaboration') {
+            marketingCosts.campaign += addon.price;
+        } else {
+            marketingCosts.monthly += addon.price;
+        }
+    });
+    
+    // Email Marketing costs
+    Object.values(marketingServices.email).forEach(service => {
+        if (service.type === 'campaign') {
+            marketingCosts.campaign += service.price;
+        } else {
+            marketingCosts.monthly += service.price;
+        }
+    });
+    
+    // Branding costs (one-time)
+    Object.values(marketingServices.branding).forEach(service => {
+        marketingCosts.oneTime += service.price;
+    });
+    
+    // Logo costs (one-time)
+    if (marketingServices.logo.service) {
+        marketingCosts.oneTime += marketingServices.logo.service.price;
+    }
+    Object.values(marketingServices.logo.addons).forEach(addon => {
+        marketingCosts.oneTime += addon.price;
+    });
+    
+    // Content Marketing costs
+    Object.values(marketingServices.content).forEach(service => {
+        if (service.type === 'oneTime') {
+            marketingCosts.oneTime += service.price;
+        } else {
+            marketingCosts.monthly += service.price;
+        }
+    });
+    
+    // Paid Ads costs (monthly)
+    Object.values(marketingServices.paidAds).forEach(service => {
+        marketingCosts.monthly += service.price;
+    });
+    
+    // Calculate annual and total
+    marketingCosts.annual = marketingCosts.monthly * 12;
+    marketingCosts.total = marketingCosts.oneTime + marketingCosts.annual + marketingCosts.campaign;
+    
+    updateMarketingDisplay();
+}
+
+// Update Marketing Display
+function updateMarketingDisplay() {
+    document.getElementById('oneTimeMarketingCost').textContent = `₹${marketingCosts.oneTime.toLocaleString('en-IN')}`;
+    document.getElementById('monthlyMarketingCost').textContent = `₹${marketingCosts.monthly.toLocaleString('en-IN')}`;
+    document.getElementById('campaignMarketingCost').textContent = `₹${marketingCosts.campaign.toLocaleString('en-IN')}`;
+    document.getElementById('annualMarketingCost').textContent = `₹${marketingCosts.annual.toLocaleString('en-IN')}`;
+    document.getElementById('totalMarketingCost').textContent = `₹${marketingCosts.total.toLocaleString('en-IN')}`;
+    
+    // Update selected services display
+    let servicesHtml = '';
+    
+    // SMM Services
+    if (Object.keys(marketingServices.smm.platforms).length > 0 || 
+        Object.keys(marketingServices.smm.services).length > 0 || 
+        marketingServices.smm.plan) {
+        servicesHtml += '<h6 class="text-primary">Social Media Marketing:</h6>';
+        
+        Object.values(marketingServices.smm.platforms).forEach(platform => {
+            servicesHtml += `<div class="d-flex justify-content-between mb-1">
+                <small>${platform.name}</small>
+                <small class="fw-bold">₹${platform.price.toLocaleString('en-IN')}/mo</small>
+            </div>`;
+        });
+        
+        Object.values(marketingServices.smm.services).forEach(service => {
+            servicesHtml += `<div class="d-flex justify-content-between mb-1">
+                <small>${service.name}</small>
+                <small class="fw-bold">₹${service.price.toLocaleString('en-IN')}/mo</small>
+            </div>`;
+        });
+        
+        if (marketingServices.smm.plan) {
+            servicesHtml += `<div class="d-flex justify-content-between mb-1">
+                <small>${marketingServices.smm.plan.name}</small>
+                <small class="fw-bold">₹${marketingServices.smm.plan.price.toLocaleString('en-IN')}/mo</small>
+            </div>`;
+        }
+        
+        Object.values(marketingServices.smm.addons).forEach(addon => {
+            const period = addon.name === 'Influencer Collaboration' ? '/campaign' : '/mo';
+            servicesHtml += `<div class="d-flex justify-content-between mb-1">
+                <small>&nbsp;&nbsp;+ ${addon.name}</small>
+                <small class="fw-bold">₹${addon.price.toLocaleString('en-IN')}${period}</small>
+            </div>`;
+        });
+    }
+    
+    // Email Marketing Services
+    if (Object.keys(marketingServices.email).length > 0) {
+        servicesHtml += '<h6 class="text-primary mt-2">Email Marketing:</h6>';
+        Object.values(marketingServices.email).forEach(service => {
+            const period = service.type === 'campaign' ? '/campaign' : '/mo';
+            servicesHtml += `<div class="d-flex justify-content-between mb-1">
+                <small>${service.name}</small>
+                <small class="fw-bold">₹${service.price.toLocaleString('en-IN')}${period}</small>
+            </div>`;
+        });
+    }
+    
+    // Branding Services
+    if (Object.keys(marketingServices.branding).length > 0) {
+        servicesHtml += '<h6 class="text-primary mt-2">Branding:</h6>';
+        Object.values(marketingServices.branding).forEach(service => {
+            servicesHtml += `<div class="d-flex justify-content-between mb-1">
+                <small>${service.name}</small>
+                <small class="fw-bold">₹${service.price.toLocaleString('en-IN')}</small>
+            </div>`;
+        });
+    }
+    
+    // Logo Services
+    if (marketingServices.logo.service || Object.keys(marketingServices.logo.addons).length > 0) {
+        servicesHtml += '<h6 class="text-primary mt-2">Logo Design:</h6>';
+        if (marketingServices.logo.service) {
+            servicesHtml += `<div class="d-flex justify-content-between mb-1">
+                <small>${marketingServices.logo.service.name}</small>
+                <small class="fw-bold">₹${marketingServices.logo.service.price.toLocaleString('en-IN')}</small>
+            </div>`;
+        }
+        Object.values(marketingServices.logo.addons).forEach(addon => {
+            servicesHtml += `<div class="d-flex justify-content-between mb-1">
+                <small>&nbsp;&nbsp;+ ${addon.name}</small>
+                <small class="fw-bold">₹${addon.price.toLocaleString('en-IN')}</small>
+            </div>`;
+        });
+    }
+    
+    // Content Marketing Services
+    if (Object.keys(marketingServices.content).length > 0) {
+        servicesHtml += '<h6 class="text-primary mt-2">Content Marketing:</h6>';
+        Object.values(marketingServices.content).forEach(service => {
+            const period = service.type === 'oneTime' ? '' : '/mo';
+            servicesHtml += `<div class="d-flex justify-content-between mb-1">
+                <small>${service.name}</small>
+                <small class="fw-bold">₹${service.price.toLocaleString('en-IN')}${period}</small>
+            </div>`;
+        });
+    }
+    
+    // Paid Ads Services
+    if (Object.keys(marketingServices.paidAds).length > 0) {
+        servicesHtml += '<h6 class="text-primary mt-2">Paid Advertising:</h6>';
+        Object.values(marketingServices.paidAds).forEach(service => {
+            servicesHtml += `<div class="d-flex justify-content-between mb-1">
+                <small>${service.name}</small>
+                <small class="fw-bold">₹${service.price.toLocaleString('en-IN')}/mo</small>
+            </div>`;
+        });
+    }
+    
+    if (!servicesHtml) {
+        servicesHtml = '<div class="mb-3"><small class="text-muted">Select marketing services to see pricing breakdown</small></div>';
+    }
+    
+    document.getElementById('selectedMarketingServices').innerHTML = servicesHtml;
+}
+
+// Quote Management Functions
+function saveMarketingQuote() {
+    const quote = {
+        services: marketingServices,
+        costs: marketingCosts,
+        timestamp: new Date().toISOString(),
+        type: 'marketing'
+    };
+    
+    let savedQuotes = JSON.parse(sessionStorage.getItem('marketingQuotes') || '[]');
+    savedQuotes.push(quote);
+    sessionStorage.setItem('marketingQuotes', JSON.stringify(savedQuotes));
+    
+    alert('Marketing plan saved successfully! Access it anytime from your saved quotes.');
+}
+
+function exportMarketingQuote() {
+    let content = 'Marketing Services Investment Plan\n';
+    content += '=====================================\n\n';
+    content += `Generated on: ${new Date().toLocaleDateString('en-IN')}\n`;
+    content += `Plan ID: MKT-${Date.now()}\n\n`;
+    
+    content += 'Selected Marketing Services:\n';
+    content += '----------------------------\n';
+    
+    // Add all selected services with detailed breakdown
+    if (Object.keys(marketingServices.smm.platforms).length > 0 || Object.keys(marketingServices.smm.services).length > 0 || marketingServices.smm.plan) {
+        content += '\n• SOCIAL MEDIA MARKETING:\n';
+        Object.values(marketingServices.smm.platforms).forEach(platform => {
+            content += `  - ${platform.name}: ₹${platform.price.toLocaleString('en-IN')}/month\n`;
+        });
+        Object.values(marketingServices.smm.services).forEach(service => {
+            content += `  - ${service.name}: ₹${service.price.toLocaleString('en-IN')}/month\n`;
+        });
+        if (marketingServices.smm.plan) {
+            content += `  - ${marketingServices.smm.plan.name}: ₹${marketingServices.smm.plan.price.toLocaleString('en-IN')}/month\n`;
+        }
+        Object.values(marketingServices.smm.addons).forEach(addon => {
+            const period = addon.name === 'Influencer Collaboration' ? '/campaign' : '/month';
+            content += `  - ${addon.name}: ₹${addon.price.toLocaleString('en-IN')}${period}\n`;
+        });
+    }
+    
+    // Add other service categories...
+    Object.keys(marketingServices.email).length > 0 && (content += '\n• EMAIL MARKETING:\n');
+    Object.values(marketingServices.email).forEach(service => {
+        const period = service.type === 'campaign' ? '/campaign' : '/month';
+        content += `  - ${service.name}: ₹${service.price.toLocaleString('en-IN')}${period}\n`;
+    });
+    
+    Object.keys(marketingServices.branding).length > 0 && (content += '\n• BRANDING SERVICES:\n');
+    Object.values(marketingServices.branding).forEach(service => {
+        content += `  - ${service.name}: ₹${service.price.toLocaleString('en-IN')} (One-time)\n`;
+    });
+    
+    if (marketingServices.logo.service || Object.keys(marketingServices.logo.addons).length > 0) {
+        content += '\n• LOGO DESIGN:\n';
+        if (marketingServices.logo.service) {
+            content += `  - ${marketingServices.logo.service.name}: ₹${marketingServices.logo.service.price.toLocaleString('en-IN')} (One-time)\n`;
+        }
+        Object.values(marketingServices.logo.addons).forEach(addon => {
+            content += `  - ${addon.name}: ₹${addon.price.toLocaleString('en-IN')} (One-time)\n`;
+        });
+    }
+    
+    Object.keys(marketingServices.content).length > 0 && (content += '\n• CONTENT MARKETING:\n');
+    Object.values(marketingServices.content).forEach(service => {
+        const period = service.type === 'oneTime' ? ' (One-time)' : '/month';
+        content += `  - ${service.name}: ₹${service.price.toLocaleString('en-IN')}${period}\n`;
+    });
+    
+    Object.keys(marketingServices.paidAds).length > 0 && (content += '\n• PAID ADVERTISING:\n');
+    Object.values(marketingServices.paidAds).forEach(service => {
+        content += `  - ${service.name}: ₹${service.price.toLocaleString('en-IN')}/month\n`;
+    });
+    
+    content += '\n\nInvestment Breakdown:\n';
+    content += '--------------------\n';
+    content += `One-time Investments: ₹${marketingCosts.oneTime.toLocaleString('en-IN')}\n`;
+    content += `Monthly Recurring: ₹${marketingCosts.monthly.toLocaleString('en-IN')}\n`;
+    content += `Campaign-based: ₹${marketingCosts.campaign.toLocaleString('en-IN')}\n`;
+    content += `Annual Projection: ₹${marketingCosts.annual.toLocaleString('en-IN')}\n`;
+    content += `Total First Year Investment: ₹${marketingCosts.total.toLocaleString('en-IN')}\n`;
+    content += '\n*Prices exclude advertising spend and applicable taxes\n';
+    content += '*Free consultation included for packages above ₹25,000\n';
+    
+    // Create and download file
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = `marketing-investment-plan-${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+}
+
+function emailMarketingQuote() {
+    const subject = encodeURIComponent('Marketing Services Investment Plan');
+    let body = 'Marketing Services Investment Plan%0A%0A';
+    
+    body += `Generated on: ${new Date().toLocaleDateString('en-IN')}%0A`;
+    body += `Plan ID: MKT-${Date.now()}%0A%0A`;
+    
+    body += 'Investment Summary:%0A';
+    body += `One-time: ₹${marketingCosts.oneTime.toLocaleString('en-IN')}%0A`;
+    body += `Monthly: ₹${marketingCosts.monthly.toLocaleString('en-IN')}%0A`;
+    body += `Campaign-based: ₹${marketingCosts.campaign.toLocaleString('en-IN')}%0A`;
+    body += `Annual: ₹${marketingCosts.annual.toLocaleString('en-IN')}%0A`;
+    body += `Total First Year: ₹${marketingCosts.total.toLocaleString('en-IN')}%0A%0A`;
+    
+    body += 'Please find the detailed breakdown in the attached plan.%0A%0A';
+    body += 'Best regards';
+    
+    const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
+    window.location.href = mailtoLink;
+}
+
+function scheduleConsultation() {
+    // Create a simple booking form or redirect to external booking system
+    const consultationForm = `
+        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+            <div style="background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%;">
+                <h4 style="margin-bottom: 20px; color: #6366f1;">Schedule Free Consultation</h4>
+                <form id="consultationForm">
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">Name:</label>
+                        <input type="text" id="clientName" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">Email:</label>
+                        <input type="email" id="clientEmail" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">Phone:</label>
+                        <input type="tel" id="clientPhone" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">Preferred Date & Time:</label>
+                        <input type="datetime-local" id="consultationDateTime" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" required>
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">Message (Optional):</label>
+                        <textarea id="consultationMessage" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+                    </div>
+                    <div style="text-align: right; gap: 10px; display: flex; justify-content: flex-end;">
+                        <button type="button" onclick="closeConsultationForm()" style="padding: 10px 20px; background: #e5e7eb; border: none; border-radius: 5px; cursor: pointer;">Cancel</button>
+                        <button type="submit" style="padding: 10px 20px; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white; border: none; border-radius: 5px; cursor: pointer;">Schedule Consultation</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', consultationForm);
+    
+    // Add form submission handler
+    document.getElementById('consultationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            name: document.getElementById('clientName').value,
+            email: document.getElementById('clientEmail').value,
+            phone: document.getElementById('clientPhone').value,
+            datetime: document.getElementById('consultationDateTime').value,
+            message: document.getElementById('consultationMessage').value,
+            totalInvestment: marketingCosts.total,
+            services: marketingServices
+        };
+        
+        // Save consultation request
+        let consultations = JSON.parse(sessionStorage.getItem('consultationRequests') || '[]');
+        consultations.push({
+            ...formData,
+            requestId: `CONS-${Date.now()}`,
+            timestamp: new Date().toISOString(),
+            status: 'pending'
+        });
+        sessionStorage.setItem('consultationRequests', JSON.stringify(consultations));
+        
+        alert('Consultation request submitted successfully! We will contact you soon to confirm the appointment.');
+        closeConsultationForm();
+    });
+}
+
+function closeConsultationForm() {
+    const form = document.querySelector('[style*="position: fixed"]');
+    if (form) {
+        form.remove();
+    }
+}
+
+// Reset all selections
+function resetAllSelections() {
+    // Reset data
+    marketingServices = {
+        smm: { platforms: {}, services: {}, plan: null, addons: {} },
+        email: {},
+        branding: {},
+        logo: { service: null, addons: {} },
+        content: {},
+        paidAds: {}
+    };
+    
+    // Reset UI
+    document.querySelectorAll('.service-option.selected').forEach(el => {
+        el.classList.remove('selected');
+    });
+    
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    
+    updateMarketingCosts();
+}
+
+// Initialize the calculator
+document.addEventListener('DOMContentLoaded', function() {
+    updateMarketingCosts();
+    
+    // Add reset button functionality if it exists
+    const resetButton = document.getElementById('resetAll');
+    if (resetButton) {
+        resetButton.addEventListener('click', resetAllSelections);
+    }
+    
+    // Set minimum datetime for consultation to current time
+    const datetimeInput = document.getElementById('consultationDateTime');
+    if (datetimeInput) {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        datetimeInput.min = now.toISOString().slice(0, 16);
+    }
+});
+</script>
+</body>
+
+</html>
