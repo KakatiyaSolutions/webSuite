@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,28 +15,28 @@
             --warning-color: #f59e0b;
             --danger-color: #ef4444;
         }
-        
+
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         .main-container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             margin: 20px 0;
             overflow: hidden;
         }
-        
+
         .header-section {
             background: linear-gradient(135deg, var(--primary-color) 0%, #3b82f6 100%);
             color: white;
             padding: 40px 0;
             text-align: center;
         }
-        
+
         .service-card {
             border: 2px solid #e2e8f0;
             border-radius: 15px;
@@ -44,13 +45,13 @@
             transition: all 0.3s ease;
             background: white;
         }
-        
+
         .service-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             border-color: var(--primary-color);
         }
-        
+
         .service-card h4 {
             color: var(--primary-color);
             font-weight: 600;
@@ -59,7 +60,7 @@
             align-items: center;
             gap: 10px;
         }
-        
+
         .plan-option {
             border: 2px solid #e2e8f0;
             border-radius: 10px;
@@ -69,17 +70,17 @@
             transition: all 0.3s ease;
             position: relative;
         }
-        
+
         .plan-option:hover {
             border-color: var(--primary-color);
             background: #f8faff;
         }
-        
+
         .plan-option.selected {
             border-color: var(--accent-color);
             background: #f0fdf4;
         }
-        
+
         .plan-option.selected::after {
             content: '✓';
             position: absolute;
@@ -89,13 +90,13 @@
             font-weight: bold;
             font-size: 18px;
         }
-        
+
         .price-tag {
             color: var(--primary-color);
             font-weight: 700;
             font-size: 1.1em;
         }
-        
+
         .summary-section {
             background: linear-gradient(135deg, #f8faff 0%, #e0f2fe 100%);
             border-radius: 15px;
@@ -103,7 +104,7 @@
             position: sticky;
             top: 20px;
         }
-        
+
         .total-amount {
             background: linear-gradient(135deg, var(--accent-color) 0%, #059669 100%);
             color: white;
@@ -112,7 +113,7 @@
             text-align: center;
             margin-top: 20px;
         }
-        
+
         .btn-custom {
             background: linear-gradient(135deg, var(--primary-color) 0%, #3b82f6 100%);
             border: none;
@@ -121,12 +122,12 @@
             font-weight: 600;
             transition: all 0.3s ease;
         }
-        
+
         .btn-custom:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
         }
-        
+
         .addon-item {
             background: #f8f9fa;
             border-radius: 8px;
@@ -136,7 +137,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .popular-badge {
             position: absolute;
             top: -10px;
@@ -148,31 +149,32 @@
             font-size: 0.8em;
             font-weight: 600;
         }
-        
+
         .feature-list {
             list-style: none;
             padding: 0;
         }
-        
+
         .feature-list li {
             padding: 5px 0;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        
+
         .feature-list li::before {
             content: '✓';
             color: var(--accent-color);
             font-weight: bold;
         }
-        .plan-option.selected {
-  border-color: var(--accent-color);
-  background: #f0fdf4;
-}
 
+        .plan-option.selected {
+            border-color: var(--accent-color);
+            background: #f0fdf4;
+        }
     </style>
 </head>
+
 <body>
     <div class="container-fluid">
         <div class="main-container">
@@ -182,7 +184,7 @@
                     <p class="lead mb-0">Choose your perfect website package with transparent pricing</p>
                 </div>
             </div>
-            
+
             <div class="container py-5">
                 <div class="row">
                     <div class="col-lg-8">
@@ -224,7 +226,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="plan-option position-relative" onclick="selectHosting('wordpress', 4999)">
+                                    <div class="plan-option position-relative"
+                                        onclick="selectHosting('wordpress', 4999)">
                                         <div class="popular-badge">Popular</div>
                                         <h5>WordPress Hosting</h5>
                                         <ul class="feature-list small">
@@ -316,26 +319,27 @@
                                     <div class="col-md-6">
                                         <div class="addon-item plan-option">
                                             <label>
-                                                <input type="checkbox" onclick="selectFramework('angular', 7000)" class="me-2"><i class="fab fa-angular text-danger"></i>  Angular 
-                                                        <i class="fa-solid fa-info-circle ms-2 text-muted"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-placement="top"
-                                                            data-bs-custom-class="custom-tooltip"
-                                                            data-bs-title="Angular: Perfect for large-scale applications with complex features, real-time data binding, and enterprise-level requirements.">
-                                                            </i>
+                                                <input type="checkbox" onclick="selectFramework('angular', 7000)"
+                                                    class="me-2"><i class="fab fa-angular text-danger"></i> Angular
+                                                <i class="fa-solid fa-info-circle ms-2 text-muted"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="Angular: Perfect for large-scale applications with complex features, real-time data binding, and enterprise-level requirements.">
+                                                </i>
                                             </label>
                                             <span class="price-tag">₹7,000 (One-time)</span><br>
                                         </div>
-                                     
+
 
                                         <div class="addon-item plan-option">
                                             <label>
-                                                <input type="checkbox" onclick="selectFramework('react', 5000)" class="me-2"><i class="fab fa-react text-info"></i> React.js <i class="fa-solid fa-info-circle ms-2 text-muted"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-placement="top"
-                                                            data-bs-custom-class="custom-tooltip"
-                                                            data-bs-title="React.js: Ideal for interactive user interfaces, fast rendering, and modern web applications with dynamic content.">
-                                                            </i>
+                                                <input type="checkbox" onclick="selectFramework('react', 5000)"
+                                                    class="me-2"><i class="fab fa-react text-info"></i> React.js <i
+                                                    class="fa-solid fa-info-circle ms-2 text-muted"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="React.js: Ideal for interactive user interfaces, fast rendering, and modern web applications with dynamic content.">
+                                                </i>
                                             </label>
                                             <span class="price-tag">₹5,000 (One-time)</span>
                                         </div>
@@ -343,30 +347,32 @@
                                     <div class="col-md-6">
                                         <div class="addon-item plan-option">
                                             <label>
-                                                <input type="checkbox" onclick="selectFramework('codeigniter', 2500)" class="me-2"><i class="fas fa-fire text-warning"></i> CodeIgniter <i class="fa-solid fa-info-circle ms-2 text-muted"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-placement="top"
-                                                            data-bs-custom-class="custom-tooltip"
-                                                            data-bs-title="CodeIgniter: Excellent for rapid PHP development, clean architecture, and database-driven websites with minimal configuration.">
-                                                            </i> 
+                                                <input type="checkbox" onclick="selectFramework('codeigniter', 2500)"
+                                                    class="me-2"><i class="fas fa-fire text-warning"></i> CodeIgniter <i
+                                                    class="fa-solid fa-info-circle ms-2 text-muted"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="CodeIgniter: Excellent for rapid PHP development, clean architecture, and database-driven websites with minimal configuration.">
+                                                </i>
                                             </label>
                                             <span class="price-tag">₹2,500 (One-time)</span>
                                         </div>
                                         <div class="addon-item plan-option">
                                             <label>
-                                               <input type="checkbox" checked onclick="selectFramework('bootstrap', 0)" class="me-2"><i class="fab fa-bootstrap text-primary"></i> Bootstrap <i class="fa-solid fa-info-circle ms-2 text-muted"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-placement="top"
-                                                            data-bs-custom-class="custom-tooltip"
-                                                            data-bs-title="Bootstrap: Essential for responsive design, mobile-first approach, and faster development with pre-built components.">
-                                                            </i>
+                                                <input type="checkbox" checked onclick="selectFramework('bootstrap', 0)"
+                                                    class="me-2"><i class="fab fa-bootstrap text-primary"></i> Bootstrap
+                                                <i class="fa-solid fa-info-circle ms-2 text-muted"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    data-bs-custom-class="custom-tooltip"
+                                                    data-bs-title="Bootstrap: Essential for responsive design, mobile-first approach, and faster development with pre-built components.">
+                                                </i>
                                             </label>
                                             <span class="price-tag">₹0 (No Extra Cost)</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                          
+
                         </div>
 
                         <!-- Maintenance Plans -->
@@ -394,25 +400,28 @@
                                             <li>Priority Support</li>
                                             <li>Performance Reports</li>
                                         </ul>
-                                        <div class="price-tag">₹29,999/year <small class="text-success">(Save ₹6,000)</small></div>
+                                        <div class="price-tag">₹29,999/year <small class="text-success">(Save
+                                                ₹6,000)</small></div>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="mt-3">
                                 <h6>Optional Add-ons:</h6>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="addon-item">
                                             <label>
-                                                <input type="checkbox" onchange="toggleAddon('plugin_updates', 1999)" class="me-2">
+                                                <input type="checkbox" onchange="toggleAddon('plugin_updates', 1999)"
+                                                    class="me-2">
                                                 Plugin Updates
                                             </label>
                                             <span class="price-tag">₹1,999/month</span>
                                         </div>
                                         <div class="addon-item">
                                             <label>
-                                                <input type="checkbox" onchange="toggleAddon('daily_backup', 999)" class="me-2">
+                                                <input type="checkbox" onchange="toggleAddon('daily_backup', 999)"
+                                                    class="me-2">
                                                 Daily Backups
                                             </label>
                                             <span class="price-tag">₹999/month</span>
@@ -421,14 +430,16 @@
                                     <div class="col-md-6">
                                         <div class="addon-item">
                                             <label>
-                                                <input type="checkbox" onchange="toggleAddon('seo_monitoring', 2499)" class="me-2">
+                                                <input type="checkbox" onchange="toggleAddon('seo_monitoring', 2499)"
+                                                    class="me-2">
                                                 SEO Monitoring
                                             </label>
                                             <span class="price-tag">₹2,499/month</span>
                                         </div>
                                         <div class="addon-item">
                                             <label>
-                                                <input type="checkbox" onchange="toggleAddon('security_scan', 1499)" class="me-2">
+                                                <input type="checkbox" onchange="toggleAddon('security_scan', 1499)"
+                                                    class="me-2">
                                                 Security Scanning
                                             </label>
                                             <span class="price-tag">₹1,499/month</span>
@@ -478,10 +489,11 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="mt-3">
                                 <label for="bannerQuantity" class="form-label">Number of Banners:</label>
-                                <input type="number" class="form-control" id="bannerQuantity" min="0" value="0" onchange="updateBannerCost()" style="max-width: 150px;">
+                                <input type="number" class="form-control" id="bannerQuantity" min="0" value="0"
+                                    onchange="updateBannerCost()" style="max-width: 150px;">
                             </div>
                         </div>
                     </div>
@@ -490,36 +502,36 @@
                     <div class="col-lg-4">
                         <div class="summary-section">
                             <h4><i class="fas fa-calculator"></i> Cost Summary</h4>
-                            
+
                             <div id="selectedServices">
                                 <div class="mb-2"><small class="text-muted">Select services to see pricing</small></div>
                             </div>
-                            
+
                             <hr>
-                            
+
                             <div class="d-flex justify-content-between mb-2">
                                 <span>One-time Costs:</span>
                                 <span class="fw-bold" id="oneTimeCost">₹0</span>
                             </div>
-                            
+
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Annual Costs:</span>
                                 <span class="fw-bold" id="annualCost">₹0</span>
                             </div>
-                            
+
                             <div class="d-flex justify-content-between mb-3">
                                 <span>Monthly Costs:</span>
                                 <span class="fw-bold" id="monthlyCost">₹0</span>
                             </div>
-                            
+
                             <div class="total-amount">
                                 <h5 class="mb-2">Total First Year Cost</h5>
                                 <h3 class="mb-0" id="totalCost">₹0</h3>
                                 <small>*Excluding taxes</small>
                             </div>
-                            
+
                             <div class="mt-3 d-grid gap-2">
-                                <button class="btn btn-custom text-white" onclick="saveQuote()">
+                                <button class="btn btn-custom text-white" onclick="saveQuoteAsImage()">
                                     <i class="fas fa-save"></i> Save Quote
                                 </button>
                                 <button class="btn btn-outline-primary" onclick="exportQuote()">
@@ -564,49 +576,51 @@
         <img src="logo1.png" alt="Company Logo" style="width: 150px; margin-bottom: 20px;">
     <p style="text-align: right; margin-top: 60px;">Operation Manager,<br><strong>Kakatiya Solutions</strong></p>
 </div> -->
-  <div id="quote-pdf" style=" width: 800px; padding: 40px; font-family: Arial, sans-serif; font-size: 12px;">
-    <img src="logo1.png" alt="Company Logo" style="width: 150px; margin-bottom: 20px; display:flex;float:right;
+    <div id="quote-pdf" style=" width: 800px; padding: 40px; font-family: Arial, sans-serif; font-size: 12px;">
+        <img src="logo1.png" alt="Company Logo" style="width: 150px; margin-bottom: 20px; display:flex;float:right;
                              ">
-  <p style=" margin-top:25px"><strong>Invoice Date:</strong> <span id="invoice-date"></span></p>
-    <h5 style="text-align: center;">Kakatiya Website Services Quotation</h5>
-      <p>Ref:- KAS/IND/02-01/ehs/Prop-001</p>
-      <p>To,
-<br>
-  <h5>Ekashila high School</h5></p>
+        <p style=" margin-top:25px"><strong>Invoice Date:</strong> <span id="invoice-date"></span></p>
+        <h5 style="text-align: center;">Kakatiya Website Services Quotation</h5>
+        <p>Ref:- KAS/IND/02-01/ehs/Prop-001</p>
+        <p>To,
+            <br>
+        <h5>Ekashila high School</h5>
+        </p>
         <p>Address: Hanamkonda,Warangal</p>
-  
 
-    <table border="1" cellspacing="0" cellpadding="8" style="width: 100%; margin-top: 50px; border-collapse: collapse;">
-        <thead>
-            <tr style="background: #f0f0f0;">
-                <th>Service</th>
-                <th>Details</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody id="service-table">
-            <!-- Filled dynamically -->
-        </tbody>
-    </table>
 
-    <p style="margin-top: 20px;"><strong>Total Cost (in words):</strong> <span id="total-in-words"></span></p>
-    <p style="margin-top: 40px;">Thank you for considering us.</p>
-<div style="text-align: right; margin-top: 40px;">
-  <img src="signature.png" alt="Signature" style="width: 150px; margin-bottom: 10px;">
-  <p style="margin: 0;">Operation Manager,<br><strong>Kakatiya Solutions</strong></p>
-</div>
+        <table border="1" cellspacing="0" cellpadding="8"
+            style="width: 100%; margin-top: 50px; border-collapse: collapse;">
+            <thead>
+                <tr style="background: #f0f0f0;">
+                    <th>Service</th>
+                    <th>Details</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="service-table">
+                <!-- Filled dynamically -->
+            </tbody>
+        </table>
 
-</div>
+        <p style="margin-top: 20px;"><strong>Total Cost (in words):</strong> <span id="total-in-words"></span></p>
+        <p style="margin-top: 40px;">Thank you for considering us.</p>
+        <div style="text-align: right; margin-top: 40px;">
+            <img src="signature.png" alt="Signature" style="width: 150px; margin-bottom: 10px;">
+            <p style="margin: 0;">Operation Manager,<br><strong>Kakatiya Solutions</strong></p>
+        </div>
+
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
-      new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-  });
-</script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+                new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
 
     <script>
         // State management
@@ -631,14 +645,14 @@
             // Remove previous selection
             document.querySelectorAll('#domain .plan-option').forEach(el => el.classList.remove('selected'));
             event.currentTarget.classList.add('selected');
-            
+
             selectedServices.domain = {
                 type: type,
                 price: price,
                 renewalPrice: renewalPrice,
                 name: `.${type} Domain`
             };
-            
+
             updateCosts();
         }
 
@@ -646,19 +660,19 @@
         function selectHosting(type, price) {
             document.querySelectorAll('.service-card:nth-child(2) .plan-option').forEach(el => el.classList.remove('selected'));
             event.currentTarget.classList.add('selected');
-            
+
             const names = {
                 shared: 'Shared Hosting',
                 wordpress: 'WordPress Hosting',
                 vps: 'VPS Hosting'
             };
-            
+
             selectedServices.hosting = {
                 type: type,
                 price: price,
                 name: names[type]
             };
-            
+
             updateCosts();
         }
 
@@ -666,20 +680,20 @@
         function selectDevelopment(type, price) {
             document.querySelectorAll('.service-card:nth-child(3) .plan-option').forEach(el => el.classList.remove('selected'));
             event.currentTarget.classList.add('selected');
-            
+
             const names = {
                 static: 'Static Website',
                 business: 'Business Website',
                 corporate: 'Corporate Website',
                 ecommerce: 'E-commerce Website'
             };
-            
+
             selectedServices.development = {
                 type: type,
                 price: price,
                 name: names[type]
             };
-            
+
             updateCosts();
         }
 
@@ -688,30 +702,30 @@
             // debugger;
             // Remove previous framework selection
             document.querySelectorAll('.framework-option').forEach(el => el.classList.remove('selected'));
-            
+
             // If clicking the same framework, deselect it
             if (selectedServices.framework && selectedServices.framework.type === type) {
                 selectedServices.framework = null;
                 updateCosts();
                 return;
             }
-            
+
             // Select new framework
             event.currentTarget.classList.add('selected');
-            
+
             const names = {
                 angular: 'Angular Framework',
                 react: 'React.js Library',
                 codeigniter: 'CodeIgniter Framework',
                 bootstrap: 'Bootstrap Framework'
             };
-            
+
             selectedServices.framework = {
                 type: type,
                 price: price,
                 name: names[type]
             };
-            
+
             updateCosts();
         }
 
@@ -719,18 +733,18 @@
         function selectMaintenance(type, price) {
             document.querySelectorAll('.service-card:nth-child(4) .plan-option').forEach(el => el.classList.remove('selected'));
             event.currentTarget.classList.add('selected');
-            
+
             const names = {
                 basic_monthly: 'Basic Monthly Maintenance',
                 basic_yearly: 'Basic Yearly Maintenance'
             };
-            
+
             selectedServices.maintenance = {
                 type: type,
                 price: price,
                 name: names[type]
             };
-            
+
             updateCosts();
         }
 
@@ -738,20 +752,20 @@
         function selectBanner(type, pricePerBanner) {
             document.querySelectorAll('.service-card:nth-child(5) .plan-option').forEach(el => el.classList.remove('selected'));
             event.currentTarget.classList.add('selected');
-            
+
             const names = {
                 static: 'Static Banner Design',
                 animated: 'Animated Banner Design',
                 custom: 'Custom Banner Design'
             };
-            
+
             selectedServices.banner = {
                 type: type,
                 pricePerBanner: pricePerBanner,
                 quantity: parseInt(document.getElementById('bannerQuantity').value) || 0,
                 name: names[type]
             };
-            
+
             updateCosts();
         }
 
@@ -770,13 +784,13 @@
                 daily_backup: 'Daily Backups',
                 seo_monitoring: 'SEO Monitoring',
                 security_scan: 'Security Scanning',
-                anguar:'Angualr Framework',
+                anguar: 'Angualr Framework',
                 react: 'React Library',
                 codeignitor: 'CodeIgnitor',
                 Bootstrap: 'Basic (HTML/CSS/JS/Bootstrap)'
 
             };
-            
+
             if (event.currentTarget.checked) {
                 selectedServices.addons[addonType] = {
                     price: price,
@@ -785,7 +799,7 @@
             } else {
                 delete selectedServices.addons[addonType];
             }
-            
+
             updateCosts();
         }
 
@@ -793,17 +807,17 @@
         function updateCosts() {
             // debugger;
             costs = { oneTime: 0, annual: 0, monthly: 0, total: 0 };
-            
+
             // Domain costs
             if (selectedServices.domain) {
                 costs.annual += selectedServices.domain.price;
             }
-            
+
             // Hosting costs
             if (selectedServices.hosting) {
                 costs.annual += selectedServices.hosting.price;
             }
-            
+
             // Development costs (one-time)
             if (selectedServices.development) {
                 costs.oneTime += selectedServices.development.price;
@@ -820,20 +834,20 @@
                     costs.annual += selectedServices.maintenance.price;
                 }
             }
-            
+
             // Add-on costs (monthly)
             Object.values(selectedServices.addons).forEach(addon => {
                 costs.monthly += addon.price;
             });
-            
+
             // Banner costs (one-time)
             if (selectedServices.banner && selectedServices.banner.quantity > 0) {
                 costs.oneTime += selectedServices.banner.pricePerBanner * selectedServices.banner.quantity;
             }
-            
+
             // Calculate total first year cost
             costs.total = costs.oneTime + costs.annual + (costs.monthly * 12);
-            
+
             updateDisplay();
         }
 
@@ -843,24 +857,24 @@
             document.getElementById('annualCost').textContent = `₹${costs.annual.toLocaleString('en-IN')}`;
             document.getElementById('monthlyCost').textContent = `₹${costs.monthly.toLocaleString('en-IN')}`;
             document.getElementById('totalCost').textContent = `₹${costs.total.toLocaleString('en-IN')}`;
-            
+
             // Update selected services display
             let servicesHtml = '';
-            
+
             if (selectedServices.domain) {
                 servicesHtml += `<div class="d-flex justify-content-between mb-1">
                     <small>${selectedServices.domain.name}</small>
                     <small class="fw-bold">₹${selectedServices.domain.price.toLocaleString('en-IN')}</small>
                 </div>`;
             }
-            
+
             if (selectedServices.hosting) {
                 servicesHtml += `<div class="d-flex justify-content-between mb-1">
                     <small>${selectedServices.hosting.name}</small>
                     <small class="fw-bold">₹${selectedServices.hosting.price.toLocaleString('en-IN')}</small>
                 </div>`;
             }
-            
+
             if (selectedServices.development) {
                 servicesHtml += `<div class="d-flex justify-content-between mb-1">
                     <small>${selectedServices.development.name}</small>
@@ -880,14 +894,14 @@
                     <small class="fw-bold">₹${selectedServices.maintenance.price.toLocaleString('en-IN')}${period}</small>
                 </div>`;
             }
-            
+
             Object.values(selectedServices.addons).forEach(addon => {
                 servicesHtml += `<div class="d-flex justify-content-between mb-1">
                     <small>${addon.name}</small>
                     <small class="fw-bold">₹${addon.price.toLocaleString('en-IN')}/month</small>
                 </div>`;
             });
-            
+
             if (selectedServices.banner && selectedServices.banner.quantity > 0) {
                 const totalBannerCost = selectedServices.banner.pricePerBanner * selectedServices.banner.quantity;
                 servicesHtml += `<div class="d-flex justify-content-between mb-1">
@@ -895,164 +909,164 @@
                     <small class="fw-bold">₹${totalBannerCost.toLocaleString('en-IN')}</small>
                 </div>`;
             }
-            
+
             if (!servicesHtml) {
                 servicesHtml = '<div class="mb-2"><small class="text-muted">Select services to see pricing</small></div>';
             }
-            
+
             document.getElementById('selectedServices').innerHTML = servicesHtml;
         }
 
 
-            async function exportQuoteAsPDF() {
-                const { jsPDF } = window.jspdf;
+        async function exportQuoteAsPDF() {
+            const { jsPDF } = window.jspdf;
 
-                // Fill invoice date
-                document.getElementById('invoice-date').textContent = new Date().toLocaleDateString('en-IN');
+            // Fill invoice date
+            document.getElementById('invoice-date').textContent = new Date().toLocaleDateString('en-IN');
 
-                // Fill service table
-                const tableBody = document.getElementById('service-table');
-                tableBody.innerHTML = '';
+            // Fill service table
+            const tableBody = document.getElementById('service-table');
+            tableBody.innerHTML = '';
 
-                let total = 0;
+            let total = 0;
 
-                const addRow = (name, details, price) => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
+            const addRow = (name, details, price) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
                         <td style="padding: 8px; border: 1px solid #ccc;">${name}</td>
                         <td style="padding: 8px; border: 1px solid #ccc;">${details}</td>
                         <td style="padding: 8px; text-align: right; border: 1px solid #ccc;">₹${price.toLocaleString('en-IN')}</td>
                     `;
-                    tableBody.appendChild(row);
-                    total += price;
-                };
+                tableBody.appendChild(row);
+                total += price;
+            };
 
-                if (selectedServices.domain) {
-                    addRow("Domain", selectedServices.domain.name, selectedServices.domain.price);
-                }
+            if (selectedServices.domain) {
+                addRow("Domain", selectedServices.domain.name, selectedServices.domain.price);
+            }
 
-                if (selectedServices.hosting) {
-                    addRow("Hosting", selectedServices.hosting.name, selectedServices.hosting.price);
-                }
+            if (selectedServices.hosting) {
+                addRow("Hosting", selectedServices.hosting.name, selectedServices.hosting.price);
+            }
 
-                if (selectedServices.development) {
-                    addRow("Development", selectedServices.development.name, selectedServices.development.price);
-                }
+            if (selectedServices.development) {
+                addRow("Development", selectedServices.development.name, selectedServices.development.price);
+            }
 
-                // if (selectedServices.maintenance) {
-                //      const totalMaintainCost = selectedServices.maintenance.price * 12;
-                //     addRow("Maintenance", `${selectedServices.maintenance.name} x 12`,totalMaintainCost);
-                // }
-                if (selectedServices.maintenance) {
-                    debugger
-                    //  const isMonthly = selectedServices.maintenance.type === 'monthly';
-                    //  const isMonthly =selectedServices.maintenance.type.includes('monthly') ? 'true' : 'false';
-                    const isMonthly = selectedServices.maintenance.type.includes('monthly');
+            // if (selectedServices.maintenance) {
+            //      const totalMaintainCost = selectedServices.maintenance.price * 12;
+            //     addRow("Maintenance", `${selectedServices.maintenance.name} x 12`,totalMaintainCost);
+            // }
+            if (selectedServices.maintenance) {
+                debugger
+                //  const isMonthly = selectedServices.maintenance.type === 'monthly';
+                //  const isMonthly =selectedServices.maintenance.type.includes('monthly') ? 'true' : 'false';
+                const isMonthly = selectedServices.maintenance.type.includes('monthly');
 
-                    const price = selectedServices.maintenance.price;
-                    const totalMaintainCost = isMonthly ? price * 12 : price;
-                    const label = isMonthly
-                        ? `${selectedServices.maintenance.name} x 12`
-                        : selectedServices.maintenance.name;
+                const price = selectedServices.maintenance.price;
+                const totalMaintainCost = isMonthly ? price * 12 : price;
+                const label = isMonthly
+                    ? `${selectedServices.maintenance.name} x 12`
+                    : selectedServices.maintenance.name;
 
-                    addRow("Maintenance", label, totalMaintainCost);
-                }
-
-                
-                 if (selectedServices.framework) {
-                    addRow("Framework", selectedServices.framework.name, selectedServices.framework.price);
-                }
-
-                Object.values(selectedServices.addons).forEach(addon => {
-                    const totalAddOnCost = addon.price * 12;
-                    addRow("Add-on", `${addon.name} X 12`, totalAddOnCost);
-                });
-
-                if (selectedServices.banner && selectedServices.banner.quantity > 0) {
-                    const totalBannerCost = selectedServices.banner.pricePerBanner * selectedServices.banner.quantity;
-                    addRow("Banner Design", `${selectedServices.banner.name} x ${selectedServices.banner.quantity}`, totalBannerCost);
-                }
-// ✅ Add Total row
-const totalRow = document.createElement('tr');
-totalRow.innerHTML = `
-    <td colspan="2" style="text-align: right; font-weight: bold;">Total</td>
-    <td style="font-weight: bold;">₹${total.toLocaleString('en-IN')}</td>
-`;
-tableBody.appendChild(totalRow);
-                // Convert total to words
-                const inWords = numberToWordsIndian(total);
-                document.getElementById('total-in-words').textContent = inWords + " only";
-
-                // Generate PDF from hidden div
-                const quoteDiv = document.getElementById('quote-pdf');
-                quoteDiv.style.display = 'block';
-
-                const canvas = await html2canvas(quoteDiv, { scale: 2 });
-                const imgData = canvas.toDataURL('image/png');
-
-                const pdf = new jsPDF('p', 'pt', 'a4');
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                pdf.save(`Quotation-KakatiyaSolutions-${new Date().toISOString().split('T')[0]}.pdf`);
-
-                quoteDiv.style.display = 'none';
+                addRow("Maintenance", label, totalMaintainCost);
             }
 
 
+            if (selectedServices.framework) {
+                addRow("Framework", selectedServices.framework.name, selectedServices.framework.price);
+            }
 
-function numberToWords(num) {
-    const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
-               'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen',
-               'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
-    const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+            Object.values(selectedServices.addons).forEach(addon => {
+                const totalAddOnCost = addon.price * 12;
+                addRow("Add-on", `${addon.name} X 12`, totalAddOnCost);
+            });
 
-    if ((num = num.toString()).length > 9) return 'Overflow';
-    const n = ('000000000' + num).substr(-9).match(/.{1,2}/g);
+            if (selectedServices.banner && selectedServices.banner.quantity > 0) {
+                const totalBannerCost = selectedServices.banner.pricePerBanner * selectedServices.banner.quantity;
+                addRow("Banner Design", `${selectedServices.banner.name} x ${selectedServices.banner.quantity}`, totalBannerCost);
+            }
+            // ✅ Add Total row
+            const totalRow = document.createElement('tr');
+            totalRow.innerHTML = `
+                    <td colspan="2" style="text-align: right; font-weight: bold;">Total</td>
+                    <td style="font-weight: bold;">₹${total.toLocaleString('en-IN')}</td>
+                `;
+            tableBody.appendChild(totalRow);
+            // Convert total to words
+            const inWords = numberToWordsIndian(total);
+            document.getElementById('total-in-words').textContent = inWords + " only";
 
-    let str = '';
-    str += (Number(n[0]) != 0) ? (a[Number(n[0])] || b[n[0][0]] + ' ' + a[n[0][1]]) + ' Crore ' : '';
-    str += (Number(n[1]) != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + ' Lakh ' : '';
-    str += (Number(n[2]) != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + ' Thousand ' : '';
-    str += (Number(n[3][0]) != 0) ? a[n[3][0]] + ' Hundred ' : '';
+            // Generate PDF from hidden div
+            const quoteDiv = document.getElementById('quote-pdf');
+            quoteDiv.style.display = 'block';
 
-    if (num > 100 && Number(n[3][1]) != 0) str += 'and ';
-    str += (a[Number(n[3].substr(1))] || b[n[3][1]] + ' ' + a[n[3][2]]) || '';
+            const canvas = await html2canvas(quoteDiv, { scale: 2 });
+            const imgData = canvas.toDataURL('image/png');
 
-    return str.trim();
-}
+            const pdf = new jsPDF('p', 'pt', 'a4');
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save(`Quotation-KakatiyaSolutions-${new Date().toISOString().split('T')[0]}.pdf`);
+
+            quoteDiv.style.display = 'none';
+        }
 
 
-function numberToWordsIndian(num) {
-    const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
-        'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen',
-        'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
-    const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
 
-    if (num === 0) return 'Zero';
+        function numberToWords(num) {
+            const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
+                'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen',
+                'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+            const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
 
-    if (num.toString().length > 9) return 'Overflow';
+            if ((num = num.toString()).length > 9) return 'Overflow';
+            const n = ('000000000' + num).substr(-9).match(/.{1,2}/g);
 
-    const numStr = ('000000000' + num).slice(-9); // Pad to 9 digits
-    const crore = parseInt(numStr.slice(0, 2));
-    const lakh = parseInt(numStr.slice(2, 4));
-    const thousand = parseInt(numStr.slice(4, 6));
-    const hundred = parseInt(numStr.slice(6, 7));
-    const tens = parseInt(numStr.slice(7, 9));
+            let str = '';
+            str += (Number(n[0]) != 0) ? (a[Number(n[0])] || b[n[0][0]] + ' ' + a[n[0][1]]) + ' Crore ' : '';
+            str += (Number(n[1]) != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + ' Lakh ' : '';
+            str += (Number(n[2]) != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + ' Thousand ' : '';
+            str += (Number(n[3][0]) != 0) ? a[n[3][0]] + ' Hundred ' : '';
 
-    let str = '';
+            if (num > 100 && Number(n[3][1]) != 0) str += 'and ';
+            str += (a[Number(n[3].substr(1))] || b[n[3][1]] + ' ' + a[n[3][2]]) || '';
 
-    if (crore) str += (crore < 20) ? a[crore] + ' Crore ' : b[Math.floor(crore / 10)] + ' ' + a[crore % 10] + ' Crore ';
-    if (lakh) str += (lakh < 20) ? a[lakh] + ' Lakh ' : b[Math.floor(lakh / 10)] + ' ' + a[lakh % 10] + ' Lakh ';
-    if (thousand) str += (thousand < 20) ? a[thousand] + ' Thousand ' : b[Math.floor(thousand / 10)] + ' ' + a[thousand % 10] + ' Thousand ';
-    if (hundred) str += a[hundred] + ' Hundred ';
+            return str.trim();
+        }
 
-    if (str !== '' && tens) str += 'and ';
-    if (tens) str += (tens < 20) ? a[tens] : b[Math.floor(tens / 10)] + ' ' + a[tens % 10];
 
-    return str.trim();
-}
+        function numberToWordsIndian(num) {
+            const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
+                'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen',
+                'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+            const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+            if (num === 0) return 'Zero';
+
+            if (num.toString().length > 9) return 'Overflow';
+
+            const numStr = ('000000000' + num).slice(-9); // Pad to 9 digits
+            const crore = parseInt(numStr.slice(0, 2));
+            const lakh = parseInt(numStr.slice(2, 4));
+            const thousand = parseInt(numStr.slice(4, 6));
+            const hundred = parseInt(numStr.slice(6, 7));
+            const tens = parseInt(numStr.slice(7, 9));
+
+            let str = '';
+
+            if (crore) str += (crore < 20) ? a[crore] + ' Crore ' : b[Math.floor(crore / 10)] + ' ' + a[crore % 10] + ' Crore ';
+            if (lakh) str += (lakh < 20) ? a[lakh] + ' Lakh ' : b[Math.floor(lakh / 10)] + ' ' + a[lakh % 10] + ' Lakh ';
+            if (thousand) str += (thousand < 20) ? a[thousand] + ' Thousand ' : b[Math.floor(thousand / 10)] + ' ' + a[thousand % 10] + ' Thousand ';
+            if (hundred) str += a[hundred] + ' Hundred ';
+
+            if (str !== '' && tens) str += 'and ';
+            if (tens) str += (tens < 20) ? a[tens] : b[Math.floor(tens / 10)] + ' ' + a[tens % 10];
+
+            return str.trim();
+        }
 
 
         // Quote management functions
@@ -1062,49 +1076,135 @@ function numberToWordsIndian(num) {
                 costs: costs,
                 timestamp: new Date().toISOString()
             };
-            
+
             // Save to memory (in a real app, this would go to a database)
             let savedQuotes = JSON.parse(sessionStorage.getItem('savedQuotes') || '[]');
             savedQuotes.push(quote);
             sessionStorage.setItem('savedQuotes', JSON.stringify(savedQuotes));
-            
+
             alert('Quote saved successfully! You can retrieve it later.');
         }
+async function saveQuoteAsImage() {
+    // Fill invoice date
+    document.getElementById('invoice-date').textContent = new Date().toLocaleDateString('en-IN');
+
+    // Fill service table
+    const tableBody = document.getElementById('service-table');
+    tableBody.innerHTML = '';
+
+    let total = 0;
+
+    const addRow = (name, details, price) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td style="padding: 8px; border: 1px solid #ccc;">${name}</td>
+            <td style="padding: 8px; border: 1px solid #ccc;">${details}</td>
+            <td style="padding: 8px; text-align: right; border: 1px solid #ccc;">₹${price.toLocaleString('en-IN')}</td>
+        `;
+        tableBody.appendChild(row);
+        total += price;
+    };
+
+    if (selectedServices.domain) {
+        addRow("Domain", selectedServices.domain.name, selectedServices.domain.price);
+    }
+
+    if (selectedServices.hosting) {
+        addRow("Hosting", selectedServices.hosting.name, selectedServices.hosting.price);
+    }
+
+    if (selectedServices.development) {
+        addRow("Development", selectedServices.development.name, selectedServices.development.price);
+    }
+
+    if (selectedServices.maintenance) {
+        const isMonthly = selectedServices.maintenance.type.includes('monthly');
+        const price = selectedServices.maintenance.price;
+        const totalMaintainCost = isMonthly ? price * 12 : price;
+        const label = isMonthly ? `${selectedServices.maintenance.name} x 12` : selectedServices.maintenance.name;
+
+        addRow("Maintenance", label, totalMaintainCost);
+    }
+
+    if (selectedServices.framework) {
+        addRow("Framework", selectedServices.framework.name, selectedServices.framework.price);
+    }
+
+    Object.values(selectedServices.addons).forEach(addon => {
+        const totalAddOnCost = addon.price * 12;
+        addRow("Add-on", `${addon.name} x 12`, totalAddOnCost);
+    });
+
+    if (selectedServices.banner && selectedServices.banner.quantity > 0) {
+        const totalBannerCost = selectedServices.banner.pricePerBanner * selectedServices.banner.quantity;
+        addRow("Banner Design", `${selectedServices.banner.name} x ${selectedServices.banner.quantity}`, totalBannerCost);
+    }
+
+    // Total row
+    const totalRow = document.createElement('tr');
+    totalRow.innerHTML = `
+        <td colspan="2" style="text-align: right; font-weight: bold;">Total</td>
+        <td style="font-weight: bold;">₹${total.toLocaleString('en-IN')}</td>
+    `;
+    tableBody.appendChild(totalRow);
+
+    // In words
+    const inWords = numberToWordsIndian(total);
+    document.getElementById('total-in-words').textContent = inWords + " only";
+
+    // Show the quote div
+    const quoteDiv = document.getElementById('quote-pdf');
+    quoteDiv.style.display = 'block';
+
+    // Convert to image and download
+    const canvas = await html2canvas(quoteDiv, { scale: 2 });
+    const imgData = canvas.toDataURL('image/png');
+
+    const link = document.createElement('a');
+    link.href = imgData;
+    link.download = `Quotation-KakatiyaSolutions-${new Date().toISOString().split('T')[0]}.png`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Hide again if needed
+    quoteDiv.style.display = 'none';
+}
 
         function exportQuote() {
             let content = 'Website Services Quote\n';
             content += '========================\n\n';
             content += `Generated on: ${new Date().toLocaleDateString('en-IN')}\n\n`;
-            
+
             content += 'Selected Services:\n';
             content += '-----------------\n';
-            
+
             if (selectedServices.domain) {
                 content += `• ${selectedServices.domain.name}: ₹${selectedServices.domain.price.toLocaleString('en-IN')}/year\n`;
             }
-            
+
             if (selectedServices.hosting) {
                 content += `• ${selectedServices.hosting.name}: ₹${selectedServices.hosting.price.toLocaleString('en-IN')}/year\n`;
             }
-            
+
             if (selectedServices.development) {
                 content += `• ${selectedServices.development.name}: ₹${selectedServices.development.price.toLocaleString('en-IN')} (One-time)\n`;
             }
-            
+
             if (selectedServices.maintenance) {
                 const period = selectedServices.maintenance.type.includes('monthly') ? '/month' : '/year';
                 content += `• ${selectedServices.maintenance.name}: ₹${selectedServices.maintenance.price.toLocaleString('en-IN')}${period}\n`;
             }
-            
+
             Object.values(selectedServices.addons).forEach(addon => {
                 content += `• ${addon.name}: ₹${addon.price.toLocaleString('en-IN')}/month\n`;
             });
-            
+
             if (selectedServices.banner && selectedServices.banner.quantity > 0) {
                 const totalBannerCost = selectedServices.banner.pricePerBanner * selectedServices.banner.quantity;
                 content += `• ${selectedServices.banner.name} (${selectedServices.banner.quantity} banners): ₹${totalBannerCost.toLocaleString('en-IN')} (One-time)\n`;
             }
-            
+
             content += '\n';
             content += 'Cost Breakdown:\n';
             content += '---------------\n';
@@ -1113,7 +1213,7 @@ function numberToWordsIndian(num) {
             content += `Monthly Costs: ₹${costs.monthly.toLocaleString('en-IN')}\n`;
             content += `Total First Year Cost: ₹${costs.total.toLocaleString('en-IN')}\n`;
             content += '\n*All prices exclude applicable taxes\n';
-            
+
             // Create and download file
             const blob = new Blob([content], { type: 'text/plain' });
             const url = window.URL.createObjectURL(blob);
@@ -1130,28 +1230,28 @@ function numberToWordsIndian(num) {
             const subject = encodeURIComponent('Website Services Quote');
             let body = 'Website Services Quote%0D%0A';
             body += '========================%0D%0A%0D%0A';
-            
+
             if (selectedServices.domain) {
                 body += `${selectedServices.domain.name}: ₹${selectedServices.domain.price.toLocaleString('en-IN')}/year%0D%0A`;
             }
-            
+
             if (selectedServices.hosting) {
                 body += `${selectedServices.hosting.name}: ₹${selectedServices.hosting.price.toLocaleString('en-IN')}/year%0D%0A`;
             }
-            
+
             if (selectedServices.development) {
                 body += `${selectedServices.development.name}: ₹${selectedServices.development.price.toLocaleString('en-IN')} (One-time)%0D%0A`;
             }
-            
+
             body += `%0D%0ATotal First Year Cost: ₹${costs.total.toLocaleString('en-IN')}%0D%0A`;
             body += '%0D%0A*All prices exclude applicable taxes';
-            
+
             window.location.href = `mailto:?subject=${subject}&body=${body}`;
         }
 
         // Initialize display
         updateDisplay();</script>
-        <!-- <script>
+    <!-- <script>
   // Select all framework checkboxes
   const frameworkCheckboxes = document.querySelectorAll('.addon-item input[type="checkbox"]');
 
@@ -1165,32 +1265,32 @@ function numberToWordsIndian(num) {
     });
   });
 </script> -->
-<script>
-  const frameworkCheckboxes = document.querySelectorAll('.plan-option input[type="checkbox"]');
+    <script>
+        const frameworkCheckboxes = document.querySelectorAll('.plan-option input[type="checkbox"]');
 
-  frameworkCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', function () {
-      frameworkCheckboxes.forEach(cb => {
-        const parent = cb.closest('.plan-option');
-        if (cb !== this) {
-          cb.checked = false;
-          parent?.classList.remove('selected');
-        }
-      });
+        frameworkCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                frameworkCheckboxes.forEach(cb => {
+                    const parent = cb.closest('.plan-option');
+                    if (cb !== this) {
+                        cb.checked = false;
+                        parent?.classList.remove('selected');
+                    }
+                });
 
-      const currentParent = this.closest('.plan-option');
-      if (this.checked) {
-        currentParent?.classList.add('selected');
-      } else {
-        currentParent?.classList.remove('selected');
-      }
-    });
-  });
-</script>
+                const currentParent = this.closest('.plan-option');
+                if (this.checked) {
+                    currentParent?.classList.add('selected');
+                } else {
+                    currentParent?.classList.remove('selected');
+                }
+            });
+        });
+    </script>
 
-<!-- for pdf making CDN's-->
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- for pdf making CDN's-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 </body>
 
