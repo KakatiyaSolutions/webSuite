@@ -343,7 +343,7 @@
                                     <div class="col-md-6">
                                         <div class="addon-item plan-option">
                                             <label>
-                                                <input type="checkbox" onclick="selectFramework('codeigniter', 3000)" class="me-2"><i class="fas fa-fire text-warning"></i> CodeIgniter <i class="fa-solid fa-info-circle ms-2 text-muted"
+                                                <input type="checkbox" onclick="selectFramework('codeigniter', 2500)" class="me-2"><i class="fas fa-fire text-warning"></i> CodeIgniter <i class="fa-solid fa-info-circle ms-2 text-muted"
                                                             data-bs-toggle="tooltip"
                                                             data-bs-placement="top"
                                                             data-bs-custom-class="custom-tooltip"
@@ -525,6 +525,10 @@
                                 <button class="btn btn-outline-primary" onclick="exportQuote()">
                                     <i class="fas fa-download"></i> Export Summary
                                 </button>
+                                <button onclick="exportQuoteAsPDF()" class="btn btn-success">
+                                    Download Quote PDF
+                                </button>
+
                                 <button class="btn btn-outline-success" onclick="emailQuote()">
                                     <i class="fas fa-envelope"></i> Email Quote
                                 </button>
@@ -535,6 +539,64 @@
             </div>
         </div>
     </div>
+
+
+    <!-- <div id="quote-pdf" style="display:none; width: 800px; padding: 40px; font-family: Arial, sans-serif; font-size: 12px;">
+    <img src="logo1.png" alt="Company Logo" style="width: 150px; margin-bottom: 20px;">
+    <h2>Website Services Quotation</h2>
+    <p><strong>Invoice Date:</strong> <span id="invoice-date"></span></p>
+
+    <table border="1" cellspacing="0" cellpadding="8" style="width: 100%; margin-top: 10px; border-collapse: collapse;">
+        <thead>
+            <tr style="background: #f0f0f0;">
+                <th>Service</th>
+                <th>Details</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody id="service-table">
+        
+        </tbody>
+    </table>
+
+    <p style="margin-top: 20px;"><strong>Total Cost (in words):</strong> <span id="total-in-words"></span></p>
+    <p style="margin-top: 40px;">Thank you for considering us.</p>
+        <img src="logo1.png" alt="Company Logo" style="width: 150px; margin-bottom: 20px;">
+    <p style="text-align: right; margin-top: 60px;">Operation Manager,<br><strong>Kakatiya Solutions</strong></p>
+</div> -->
+  <div id="quote-pdf" style=" width: 800px; padding: 40px; font-family: Arial, sans-serif; font-size: 12px;">
+    <img src="logo1.png" alt="Company Logo" style="width: 150px; margin-bottom: 20px; display:flex;float:right;
+                             ">
+  <p style=" margin-top:25px"><strong>Invoice Date:</strong> <span id="invoice-date"></span></p>
+    <h5 style="text-align: center;">Kakatiya Website Services Quotation</h5>
+      <p>Ref:- KAS/IND/02-01/ehs/Prop-001</p>
+      <p>To,
+<br>
+  <h5>Ekashila high School</h5></p>
+        <p>Address: Hanamkonda,Warangal</p>
+  
+
+    <table border="1" cellspacing="0" cellpadding="8" style="width: 100%; margin-top: 50px; border-collapse: collapse;">
+        <thead>
+            <tr style="background: #f0f0f0;">
+                <th>Service</th>
+                <th>Details</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody id="service-table">
+            <!-- Filled dynamically -->
+        </tbody>
+    </table>
+
+    <p style="margin-top: 20px;"><strong>Total Cost (in words):</strong> <span id="total-in-words"></span></p>
+    <p style="margin-top: 40px;">Thank you for considering us.</p>
+<div style="text-align: right; margin-top: 40px;">
+  <img src="signature.png" alt="Signature" style="width: 150px; margin-bottom: 10px;">
+  <p style="margin: 0;">Operation Manager,<br><strong>Kakatiya Solutions</strong></p>
+</div>
+
+</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -729,7 +791,7 @@
 
         // Update cost calculations
         function updateCosts() {
-            debugger;
+            // debugger;
             costs = { oneTime: 0, annual: 0, monthly: 0, total: 0 };
             
             // Domain costs
@@ -840,6 +902,142 @@
             
             document.getElementById('selectedServices').innerHTML = servicesHtml;
         }
+
+
+            async function exportQuoteAsPDF() {
+                const { jsPDF } = window.jspdf;
+
+                // Fill invoice date
+                document.getElementById('invoice-date').textContent = new Date().toLocaleDateString('en-IN');
+
+                // Fill service table
+                const tableBody = document.getElementById('service-table');
+                tableBody.innerHTML = '';
+
+                let total = 0;
+
+                const addRow = (name, details, price) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td style="padding: 8px; border: 1px solid #ccc;">${name}</td>
+                        <td style="padding: 8px; border: 1px solid #ccc;">${details}</td>
+                        <td style="padding: 8px; text-align: right; border: 1px solid #ccc;">₹${price.toLocaleString('en-IN')}</td>
+                    `;
+                    tableBody.appendChild(row);
+                    total += price;
+                };
+
+                if (selectedServices.domain) {
+                    addRow("Domain", selectedServices.domain.name, selectedServices.domain.price);
+                }
+
+                if (selectedServices.hosting) {
+                    addRow("Hosting", selectedServices.hosting.name, selectedServices.hosting.price);
+                }
+
+                if (selectedServices.development) {
+                    addRow("Development", selectedServices.development.name, selectedServices.development.price);
+                }
+
+                if (selectedServices.maintenance) {
+                     const totalMaintainCost = selectedServices.maintenance.price * 12;
+                    addRow("Maintenance", `${selectedServices.maintenance.name} x 12`,totalMaintainCost);
+                }
+                 if (selectedServices.framework) {
+                    addRow("Framework", selectedServices.framework.name, selectedServices.framework.price);
+                }
+
+                Object.values(selectedServices.addons).forEach(addon => {
+                    const totalAddOnCost = addon.price * 12;
+                    addRow("Add-on", `${addon.name} X 12`, totalAddOnCost);
+                });
+
+                if (selectedServices.banner && selectedServices.banner.quantity > 0) {
+                    const totalBannerCost = selectedServices.banner.pricePerBanner * selectedServices.banner.quantity;
+                    addRow("Banner Design", `${selectedServices.banner.name} x ${selectedServices.banner.quantity}`, totalBannerCost);
+                }
+// ✅ Add Total row
+const totalRow = document.createElement('tr');
+totalRow.innerHTML = `
+    <td colspan="2" style="text-align: right; font-weight: bold;">Total</td>
+    <td style="font-weight: bold;">₹${total.toLocaleString('en-IN')}</td>
+`;
+tableBody.appendChild(totalRow);
+                // Convert total to words
+                const inWords = numberToWordsIndian(total);
+                document.getElementById('total-in-words').textContent = inWords + " only";
+
+                // Generate PDF from hidden div
+                const quoteDiv = document.getElementById('quote-pdf');
+                quoteDiv.style.display = 'block';
+
+                const canvas = await html2canvas(quoteDiv, { scale: 2 });
+                const imgData = canvas.toDataURL('image/png');
+
+                const pdf = new jsPDF('p', 'pt', 'a4');
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save(`Quotation-KakatiyaSolutions-${new Date().toISOString().split('T')[0]}.pdf`);
+
+                quoteDiv.style.display = 'none';
+            }
+
+
+
+function numberToWords(num) {
+    const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
+               'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen',
+               'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+    const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+    if ((num = num.toString()).length > 9) return 'Overflow';
+    const n = ('000000000' + num).substr(-9).match(/.{1,2}/g);
+
+    let str = '';
+    str += (Number(n[0]) != 0) ? (a[Number(n[0])] || b[n[0][0]] + ' ' + a[n[0][1]]) + ' Crore ' : '';
+    str += (Number(n[1]) != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + ' Lakh ' : '';
+    str += (Number(n[2]) != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + ' Thousand ' : '';
+    str += (Number(n[3][0]) != 0) ? a[n[3][0]] + ' Hundred ' : '';
+
+    if (num > 100 && Number(n[3][1]) != 0) str += 'and ';
+    str += (a[Number(n[3].substr(1))] || b[n[3][1]] + ' ' + a[n[3][2]]) || '';
+
+    return str.trim();
+}
+
+
+function numberToWordsIndian(num) {
+    const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
+        'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen',
+        'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+    const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+    if (num === 0) return 'Zero';
+
+    if (num.toString().length > 9) return 'Overflow';
+
+    const numStr = ('000000000' + num).slice(-9); // Pad to 9 digits
+    const crore = parseInt(numStr.slice(0, 2));
+    const lakh = parseInt(numStr.slice(2, 4));
+    const thousand = parseInt(numStr.slice(4, 6));
+    const hundred = parseInt(numStr.slice(6, 7));
+    const tens = parseInt(numStr.slice(7, 9));
+
+    let str = '';
+
+    if (crore) str += (crore < 20) ? a[crore] + ' Crore ' : b[Math.floor(crore / 10)] + ' ' + a[crore % 10] + ' Crore ';
+    if (lakh) str += (lakh < 20) ? a[lakh] + ' Lakh ' : b[Math.floor(lakh / 10)] + ' ' + a[lakh % 10] + ' Lakh ';
+    if (thousand) str += (thousand < 20) ? a[thousand] + ' Thousand ' : b[Math.floor(thousand / 10)] + ' ' + a[thousand % 10] + ' Thousand ';
+    if (hundred) str += a[hundred] + ' Hundred ';
+
+    if (str !== '' && tens) str += 'and ';
+    if (tens) str += (tens < 20) ? a[tens] : b[Math.floor(tens / 10)] + ' ' + a[tens % 10];
+
+    return str.trim();
+}
+
 
         // Quote management functions
         function saveQuote() {
@@ -974,6 +1172,9 @@
   });
 </script>
 
+<!-- for pdf making CDN's-->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 </body>
 
