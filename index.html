@@ -166,6 +166,11 @@
             color: var(--accent-color);
             font-weight: bold;
         }
+        .plan-option.selected {
+  border-color: var(--accent-color);
+  background: #f0fdf4;
+}
+
     </style>
 </head>
 <body>
@@ -305,88 +310,11 @@
                                 </div>
                             </div>
 
-                            <!-- <div class="mt-3">
-                                <h6>Optional Add-ons:</h6>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="addon-item">
-                                            <label>
-                                                <input type="radio" name="devAddon" onchange="selectDevAddon('angular', 7000)" class="me-2">
-                                                Angular
-                                            </label>
-                                            <span class="price-tag">₹7,000 (One-time)</span>
-                                        </div>
-                                        <div class="addon-item">
-                                            <label>
-                                                <input type="radio" name="devAddon" onchange="selectDevAddon('react', 5000)" class="me-2">
-                                                React.js
-                                            </label>
-                                            <span class="price-tag">₹5,000 (One-time)</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="addon-item">
-                                            <label>
-                                                <input type="radio" name="devAddon" onchange="selectDevAddon('codeignitor', 2500)" class="me-2">
-                                                Codeignitor
-                                            </label>
-                                            <span class="price-tag">₹2,500 (One-time)</span>
-                                        </div>
-                                        <div class="addon-item">
-                                            <label>
-                                                <input type="radio" name="devAddon" checked onchange="selectDevAddon('Bootstrap', 0)" class="me-2">
-                                                Bootstrap
-                                            </label>
-                                            <span class="price-tag">₹0 (No Extra Cost)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <script>
-                                function selectDevAddon(type, price) {
-                                    // Remove previous devAddon from selectedServices.addons
-                                    ['angular', 'react', 'codeignitor', 'Bootstrap'].forEach(key => {
-                                        delete selectedServices.addons[key];
-                                    });
-                                    // Add the selected one
-                                    const names = {
-                                        angular: 'Angular',
-                                        react: 'React.js',
-                                        codeignitor: 'Codeignitor',
-                                        Bootstrap: 'Bootstrap'
-                                    };
-                                    selectedServices.addons[type] = {
-                                        price: price,
-                                        name: names[type]
-                                    };
-                                    updateCosts();
-                                }
-                            </script> -->
-                              <!-- <div class="addon-item">
-                                            <div class="form-check">
-                                                <label class="form-check-label">
-                                                <input type="checkbox" onclick="selectFramework('angular', 25000)" class="me-2">
-                                                <i class="fab fa-angular text-danger"></i> Angular
-                                                <i class="fa-solid fa-info-circle ms-2 text-muted"
-                                                    data-bs-toggle="tooltip"
-                                                    data-bs-placement="top"
-                                                    data-bs-custom-class="custom-tooltip"
-                                                    data-bs-title="Angular: Perfect for large-scale applications with complex features, real-time data binding, and enterprise-level requirements."></i>
-                                                </label>
-                                            </div>
-
-                                            <div>
-                                                <span class="price-tag">₹7,000 (One-time)</span><br>
-                                                <small class="text-muted">Enterprise-grade SPA framework</small>
-                                            </div>
-                                            </div> -->
-
-
                             <div class="mt-3">
                                 <h6>Framework Add-ons:</h6>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="addon-item">
+                                        <div class="addon-item plan-option">
                                             <label>
                                                 <input type="checkbox" onclick="selectFramework('angular', 7000)" class="me-2"><i class="fab fa-angular text-danger"></i>  Angular 
                                                         <i class="fa-solid fa-info-circle ms-2 text-muted"
@@ -400,7 +328,7 @@
                                         </div>
                                      
 
-                                        <div class="addon-item">
+                                        <div class="addon-item plan-option">
                                             <label>
                                                 <input type="checkbox" onclick="selectFramework('react', 5000)" class="me-2"><i class="fab fa-react text-info"></i> React.js <i class="fa-solid fa-info-circle ms-2 text-muted"
                                                             data-bs-toggle="tooltip"
@@ -413,7 +341,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="addon-item">
+                                        <div class="addon-item plan-option">
                                             <label>
                                                 <input type="checkbox" onclick="selectFramework('codeigniter', 3000)" class="me-2"><i class="fas fa-fire text-warning"></i> CodeIgniter <i class="fa-solid fa-info-circle ms-2 text-muted"
                                                             data-bs-toggle="tooltip"
@@ -424,7 +352,7 @@
                                             </label>
                                             <span class="price-tag">₹2,500 (One-time)</span>
                                         </div>
-                                        <div class="addon-item">
+                                        <div class="addon-item plan-option">
                                             <label>
                                                <input type="checkbox" checked onclick="selectFramework('bootstrap', 0)" class="me-2"><i class="fab fa-bootstrap text-primary"></i> Bootstrap <i class="fa-solid fa-info-circle ms-2 text-muted"
                                                             data-bs-toggle="tooltip"
@@ -1009,6 +937,44 @@
 
         // Initialize display
         updateDisplay();</script>
+        <!-- <script>
+  // Select all framework checkboxes
+  const frameworkCheckboxes = document.querySelectorAll('.addon-item input[type="checkbox"]');
+
+  frameworkCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function () {
+      if (this.checked) {
+        frameworkCheckboxes.forEach(cb => {
+          if (cb !== this) cb.checked = false;
+        });
+      }
+    });
+  });
+</script> -->
+<script>
+  const frameworkCheckboxes = document.querySelectorAll('.addon-item input[type="checkbox"]');
+
+  frameworkCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function () {
+      frameworkCheckboxes.forEach(cb => {
+        const parent = cb.closest('.addon-item');
+        if (cb !== this) {
+          cb.checked = false;
+          parent?.classList.remove('selected');
+        }
+      });
+
+      const currentParent = this.closest('.addon-item');
+      if (this.checked) {
+        currentParent?.classList.add('selected');
+      } else {
+        currentParent?.classList.remove('selected');
+      }
+    });
+  });
+</script>
+
+
 </body>
 
 </html>
