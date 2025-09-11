@@ -228,7 +228,7 @@
                     </div>
                     
                     <!-- Summary Section - Always Visible -->
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 ">
                         <div class="summary-section">
                             <h4><i class="fas fa-calculator"></i> Cost Summary</h4>
 
@@ -633,15 +633,19 @@
                             </div>
                         </div>
                     </div> -->
+                
+                
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Hidden PDF Template -->
-    <div id="quote-pdf" style="display:none; width: 800px; padding: 40px; font-family: Arial, sans-serif; font-size: 12px;">
+    <!-- <div id="quote-pdf" style="display:none; width: 800px; padding: 40px; font-family: Arial, sans-serif; font-size: 12px;">
         <div style="text-align: right; margin-bottom: 20px;">
-            <div style="width: 150px; height: 50px; background: #f0f0f0; display: inline-block;">Logo Placeholder</div>
+            <div style="width: 150px; height: 50px; background: hsl(0, 0%, 100%); display: inline-block;">
+                <img src="logo1.png" alt="Kakatiya Logo">
+            </div>
         </div>
         <p style="margin-top:25px"><strong>Invoice Date:</strong> <span id="invoice-date"></span></p>
         <h5 style="text-align: center;">Kakatiya Website Services Quotation</h5>
@@ -658,17 +662,74 @@
                 </tr>
             </thead>
             <tbody id="service-table">
-                <!-- Filled dynamically -->
+                
             </tbody>
         </table>
 
         <p style="margin-top: 20px;"><strong>Total Cost (in words):</strong> <span id="total-in-words"></span></p>
         <p style="margin-top: 40px;">Thank you for considering us.</p>
         <div style="text-align: right; margin-top: 40px;">
-            <div style="width: 150px; height: 50px; background: #f0f0f0; margin-bottom: 10px;">Signature Placeholder</div>
-            <p style="margin: 0;">Operation Manager,<br><strong>Kakatiya Solutions</strong></p>
+            <div style="width: 150px; height: 50px; background: #ffffff; margin-bottom: 10px; display: flex;float: inline-end;">
+                <img src="signature.png" alt=" Manager Signature">
+                 <p style="margin: 0;">Operation Manager,<br><strong>Kakatiya Solutions</strong></p>
+            </div>
+           
+        </div>
+    </div> -->
+
+    <div id="quote-pdf" style="display:none; width: 800px; padding: 40px; font-family: Arial, sans-serif; font-size: 13px; color: #000;">
+    <!-- Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <div>
+            <h2 style="margin: 0;">Quotation</h2>
+            <p style="margin: 5px 0 0;">Ref: KAS/IND/02-01/EHS/Prop-001</p>
+            <p style="margin: 0;">Date: <span id="invoice-date"></span></p>
+        </div>
+        <div>
+            <img src="logo1.png" alt="Kakatiya Logo" style="max-height: 60px;">
         </div>
     </div>
+
+    <!-- Client Info -->
+    <div style="margin-bottom: 20px;">
+        <p><strong>To,</strong></p>
+        <p style="margin: 0;"><strong>Client Name</strong></p>
+        <p style="margin: 0;">Address: Location</p>
+    </div>
+
+    <!-- Title -->
+    <h4 style="text-align: center; margin-top: 40px; margin-bottom: 30px;">Kakatiya Website Services Quotation</h4>
+
+    <!-- Table -->
+    <table border="1" cellspacing="0" cellpadding="8" style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color: #f0f0f0;">
+                <th style="text-align: left;">Service</th>
+                <th style="text-align: left;">Details</th>
+                <th style="text-align: right;">Price</th>
+            </tr>
+        </thead>
+        <tbody id="service-table">
+            <!-- Dynamic rows go here -->
+        </tbody>
+    </table>
+
+    <!-- Total in Words -->
+    <p style="margin-top: 20px;"><strong>Total Cost (in words):</strong> <span id="total-in-words"></span></p>
+
+    <!-- Footer -->
+    <p style="margin-top: 40px;">Thank you for considering <strong>Kakatiya Solutions</strong> for your web service needs.</p>
+
+    <!-- Signature Section -->
+    <div style="margin-top: 60px; display: flex; justify-content: flex-end; align-items: flex-end;">
+        <div style="text-align: right;">
+            <img src="signature.png" alt="Manager Signature" style="max-height: 50px; margin-bottom: 5px;">
+            <p style="margin: 0;">Operations Manager</p>
+            <strong>Kakatiya Solutions</strong>
+        </div>
+    </div>
+</div>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
