@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get A Quote - Choose Your Perfect Website Package</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.9);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            background: white;
+            margin: 30px 0;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+        }
+
+        .section h2 {
+            color: #4a5568;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .service-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .service-card.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea10, #764ba210);
+        }
+
+        .service-card.selected::before {
+            content: '✓';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #667eea;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .service-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .service-features li {
+            padding: 5px 0;
+            color: #4a5568;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .service-features li::before {
+            content: '•';
+            color: #667eea;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #667eea;
+            text-align: center;
+            padding: 10px;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .addon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .addon-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .addon-item:hover {
+            border-color: #667eea;
+        }
+
+        .addon-item.selected {
+            border-color: #667eea;
+            background: #667eea10;
+        }
+
+        .cost-summary {
+            background: linear-gradient(135deg, #2d3748, #4a5568);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .cost-summary h2 {
+            border-bottom: 2px solid white;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cost-item:last-child {
+            border-bottom: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 10px;
+            padding-top: 20px;
+            border-top: 2px solid white;
+        }
+
+        .cost-value {
+            color: #feca57;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+
+        .bundle-section {
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            border: 2px solid #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Get A QUOTE</h1>
+        <p class="subtitle">Choose your perfect website package with transparent pricing</p>
+
+        <!-- Web Bundles Section -->
+        <div class="section bundle-section">
+            <h2>🎁 Web Bundles</h2>
+            <div class="service-grid">
+                <!-- Customized Web Plan -->
+                <div class="service-card" data-type="bundle" data-price="0">
+                    <h3 class="service-title">Customized Web Plan</h3>
+                    <ul class="service-features">
+                        <li>Choose Domain</li>
+                        <li>Choose Hosting Plan</li>
+                        <li>Choose Design & Development Service</li>
+                        <li>Choose Maintenance Plan</li>
+                        <li>Choose Festive Banner</li>
+                        <li>Choose Security & Other Services</li>
+                    </ul>
+                    <div class="price">Price varies based on selected Plans</div>
+                </div>
+
+                <!-- Bundle Package -->
+                <div class="service-card" data-type="bundle" data-price="59999">
+                    <div class="popular-badge">Best Value</div>
+                    <h3 class="service-title">Bundle Package</h3>
+                    <ul class="service-features">
+                        <li>Includes Domain (.com / .in)</li>
+                        <li>Includes Shared Hosting</li>
+                        <li>Includes Static or Business Website</li>
+                        <li>Includes 1 Year Free Maintenance</li>
+                        <li>Default Framework: CodeIgniter</li>
+                        <li>1 Year Security & SEO</li>
+                        <li>1 Year Festive Banner Pack (12 Banners)</li>
+                    </ul>
+                    <div class="price">₹59,999/year <small>(Save ₹19,285)</small></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Domain Selection -->
+        <div class="section">
+            <h2>🌐 Domain Selection</h2>
+            <div class="service-grid">
+                <div class="service-card" data-type="domain" data-price="999">
+                    <h3 class="service-title">.in Domain</h3>
+                    <p style="color: #666; margin-bottom: 15px;">Perfect for Indian businesses</p>
+                    <div class="price">₹999/year <small>(Renewal: ₹1,299/year)</small></div>
+                </div>
+                <div class="service-card" data-type="domain" data-price="1299">
+                    <h3 class="service-title">.com Domain</h3>
+                    <p style="color: #666; margin-bottom: 15px;">Global recognition</p>
+                    <div class="price">₹1,299/year <small>(Renewal: ₹1,599/year)</small></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hosting Plans -->
+        <div class="section">
+            <h2>🏠 Hosting Plans</h2>
+            <div class="service-grid">
+                <div class="service-card" data-type="hosting" data-price="2999">
+                    <h3 class="service-title">Shared Hosting</h3>
+                    <ul class="service-features">
+                        <li>100 GB Storage</li>
+                        <li>Unlimited Bandwidth</li>
+                        <li>1 Website</li>
+                        <li>Free SSL Certificate</li>
+                    </ul>
+                    <div class="price">₹2,999/year</div>
+                </div>
+                <div class="service-card" data-type="hosting" data-price="4999">
+                    <div class="popular-badge">Popular</div>
+                    <h3 class="service-title">WordPress Hosting</h3>
+                    <ul class="service-features">
+                        <li>200 GB SSD Storage</li>
+                        <li>Unlimited Bandwidth</li>
+                        <li>100 Websites</li>
+                        <li>WordPress Optimized</li>
+                        <li>Free SSL & CDN</li>
+                    </ul>
+                    <div class="price">₹4,999/year</div>
+                </div>
+                <div class="service-card" data-type="hosting" data-price="12999">
+                    <h3 class="service-title">VPS Hosting</h3>
+                    <ul class="service-features">
+                        <li>4 GB RAM</li>
+                        <li>80 GB SSD Storage</li>
+                        <li>2 CPU Cores</li>
+                        <li>Root Access</li>
+                        <li>Dedicated Resources</li>
+                    </ul>
+                    <div class="price">₹12,999/year</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Design & Development Services -->
+        <div class="section">
+            <h2>🎨 Design & Development Services</h2>
+            <div class="service-grid">
+                <div class="service-card" data-type="development" data-price="15999">
+                    <h3 class="service-title">Static Website</h3>
+                    <ul class="service-features">
+                        <li>Up to 5 Pages</li>
+                        <li>Responsive Design</li>
+                        <li>Contact Form</li>
+                        <li>Basic SEO</li>
+                    </ul>
+                    <div class="price">₹15,999 <small>(One-time)</small></div>
+                </div>
+                <div class="service-card" data-type="development" data-price="35999">
+                    <h3 class="service-title">Business Website</h3>
+                    <ul class="service-features">
+                        <li>Up to 10 Pages</li>
+                        <li>CMS Integration</li>
+                        <li>Advanced Forms</li>
+                        <li>SEO Optimized</li>
+                        <li>Social Media Integration</li>
+                    </ul>
+                    <div class="price">₹35,999 <small>(One-time)</small></div>
+                </div>
+                <div class="service-card" data-type="development" data-price="75999">
+                    <h3 class="service-title">Corporate Website</h3>
+                    <ul class="service-features">
+                        <li>Unlimited Pages</li>
+                        <li>Custom Design</li>
+                        <li>Advanced CMS</li>
+                        <li>Multi-language Support</li>
+                        <li>Admin Panel</li>
+                    </ul>
+                    <div class="price">₹75,999 <small>(One-time)</small></div>
+                </div>
+                <div class="service-card" data-type="development" data-price="125999">
+                    <h3 class="service-title">E-commerce Website</h3>
+                    <ul class="service-features">
+                        <li>Online Store</li>
+                        <li>Payment Gateway</li>
+                        <li>Inventory Management</li>
+                        <li>Order Tracking</li>
+                        <li>Customer Dashboard</li>
+                    </ul>
+                    <div class="price">₹1,25,999 <small>(One-time)</small></div>
+                </div>
+            </div>
+            
+            <h4 style="margin-top: 25px; color: #4a5568;">Framework Add-ons:</h4>
+            <div class="addon-grid">
+                <div class="addon-item" data-type="framework" data-price="7000">
+                    <strong>Laravel</strong><br>₹7,000 (One-time)
+                </div>
+                <div class="addon-item" data-type="framework" data-price="5000">
+                    <strong>Django</strong><br>₹5,000 (One-time)
+                </div>
+                <div class="addon-item" data-type="framework" data-price="2500">
+                    <strong>Node.js</strong><br>₹2,500 (One-time)
+                </div>
+                <div class="addon-item" data-type="framework" data-price="0">
+                    <strong>CodeIgniter</strong><br>₹0 (No Extra Cost)
+                </div>
+            </div>
+        </div>
+
+        <!-- Maintenance Plans -->
+        <div class="section">
+            <h2>🔧 Maintenance Plans</h2>
+            <div class="service-grid">
+                <div class="service-card" data-type="maintenance" data-price="2999" data-period="monthly">
+                    <h3 class="service-title">Basic Monthly Plan</h3>
+                    <ul class="service-features">
+                        <li>Security Updates</li>
+                        <li>Content Updates (2/month)</li>
+                        <li>Basic Support</li>
+                        <li>Uptime Monitoring</li>
+                    </ul>
+                    <div class="price">₹2,999/month</div>
+                </div>
+                <div class="service-card" data-type="maintenance" data-price="29999" data-period="yearly">
+                    <h3 class="service-title">Basic Yearly Plan</h3>
+                    <ul class="service-features">
+                        <li>All Monthly Features</li>
+                        <li>Content Updates (30/year)</li>
+                        <li>Priority Support</li>
+                        <li>Performance Reports</li>
+                    </ul>
+                    <div class="price">₹29,999/year <small>(Save ₹6,000)</small></div>
+                </div>
+            </div>
+
+            <h4 style="margin-top: 25px; color: #4a5568;">Optional Add-ons:</h4>
+            <div class="addon-grid">
+                <div class="addon-item" data-type="addon" data-price="1999" data-period="monthly">
+                    <strong>Content Marketing</strong><br>₹1,999/month
+                </div>
+                <div class="addon-item" data-type="addon" data-price="999" data-period="monthly">
+                    <strong>Social Media</strong><br>₹999/month
+                </div>
+                <div class="addon-item" data-type="addon" data-price="2499" data-period="monthly">
+                    <strong>Advanced SEO</strong><br>₹2,499/month
+                </div>
+                <div class="addon-item" data-type="addon" data-price="1499" data-period="monthly">
+                    <strong>Analytics Setup</strong><br>₹1,499/month
+                </div>
+                <div class="addon-item" data-type="addon" data-price="199" data-period="monthly">
+                    <strong>Basic Support</strong><br>₹199/month
+                </div>
+            </div>
+        </div>
+
+        <!-- Festive Banner Design Services -->
+        <div class="section">
+            <h2>🎨 Festive Banner Design Services</h2>
+            <div class="service-grid">
+                <div class="service-card" data-type="banner" data-price="2999">
+                    <h3 class="service-title">Static Banner</h3>
+                    <ul class="service-features">
+                        <li>High Resolution Images</li>
+                        <li>Multiple Formats</li>
+                        <li>12 Festival Banners</li>
+                    </ul>
+                    <div class="price">₹2,999/Year</div>
+                </div>
+                <div class="service-card" data-type="banner" data-price="5999">
+                    <h3 class="service-title">Animated Banner</h3>
+                    <ul class="service-features">
+                        <li>GIF/MP4 Format</li>
+                        <li>Multiple Sizes</li>
+                        <li>Source Files</li>
+                        <li>12 Festival Banners</li>
+                    </ul>
+                    <div class="price">₹5,999/Year</div>
+                </div>
+                <div class="service-card" data-type="banner" data-price="7999">
+                    <h3 class="service-title">Custom Design</h3>
+                    <ul class="service-features">
+                        <li>Unique Concept</li>
+                        <li>All Formats</li>
+                        <li>Unlimited Festival Banners</li>
+                        <li>Brand Guidelines</li>
+                    </ul>
+                    <div class="price">₹7,999/Year</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cost Summary -->
+        <div class="cost-summary">
+            <h2>💰 Cost Summary</h2>
+            <p style="margin-bottom: 20px; opacity: 0.8;">Select services to see pricing</p>
+            
+            <div class="cost-item">
+                <span>One-time Costs:</span>
+                <span class="cost-value" id="oneTimeCost">₹0</span>
+            </div>
+            <div class="cost-item">
+                <span>Annual Costs:</span>
+                <span class="cost-value" id="annualCost">₹0</span>
+            </div>
+            <div class="cost-item">
+                <span>Monthly Costs:</span>
+                <span class="cost-value" id="monthlyCost">₹0</span>
+            </div>
+            <div class="cost-item">
+                <span>Total First Year Cost:</span>
+                <span class="cost-value" id="totalCost">₹0</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedServices = {
+            bundle: null,
+            domain: null,
+            hosting: null,
+            development: null,
+            framework: null,
+            maintenance: null,
+            banner: null,
+            addons: []
+        };
+
+        // Initialize event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Service card listeners
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    handleServiceSelection(this);
+                });
+            });
+
+            // Add-on item listeners
+            document.querySelectorAll('.addon-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    handleAddonSelection(this);
+                });
+            });
+        });
+
+        function handleServiceSelection(card) {
+            const type = card.dataset.type;
+            const price = parseInt(card.dataset.price);
+
+            if (type === 'bundle') {
+                // Handle bundle selection
+                document.querySelectorAll('[data-type="bundle"]').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                
+                selectedServices.bundle = {
+                    price: price,
+                    element: card
+                };
+
+                // If bundle package is selected, disable other service selections
+                if (price === 59999) {
+                    disableIndividualServices(true);
+                } else {
+                    disableIndividualServices(false);
+                }
+            } else if (selectedServices.bundle && selectedServices.bundle.price === 59999) {
+                // Don't allow individual service selection if bundle is selected
+                return;
+            } else {
+                // Handle individual service selection
+                document.querySelectorAll(`[data-type="${type}"]`).forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                
+                selectedServices[type] = {
+                    price: price,
+                    period: card.dataset.period || 'yearly',
+                    element: card
+                };
+            }
+
+            calculateTotalCost();
+        }
+
+        function handleAddonSelection(item) {
+            const type = item.dataset.type;
+            const price = parseInt(item.dataset.price);
+            const period = item.dataset.period || 'yearly';
+
+            // Don't allow addon selection if bundle is selected
+            if (selectedServices.bundle && selectedServices.bundle.price === 59999) {
+                return;
+            }
+
+            if (item.classList.contains('selected')) {
+                item.classList.remove('selected');
+                // Remove from addons array
+                selectedServices.addons = selectedServices.addons.filter(addon => addon.element !== item);
+            } else {
+                item.classList.add('selected');
+                // Add to addons array
+                selectedServices.addons.push({
+                    type: type,
+                    price: price,
+                    period: period,
+                    element: item
+                });
+            }
+
+            calculateTotalCost();
+        }
+
+        function disableIndividualServices(disable) {
+            const serviceTypes = ['domain', 'hosting', 'development', 'maintenance', 'banner'];
+            
+            serviceTypes.forEach(type => {
+                document.querySelectorAll(`[data-type="${type}"]`).forEach(card => {
+                    if (disable) {
+                        card.style.opacity = '0.5';
+                        card.style.pointerEvents = 'none';
+                        card.classList.remove('selected');
+                        selectedServices[type] = null;
+                    } else {
+                        card.style.opacity = '1';
+                        card.style.pointerEvents = 'auto';
+                    }
+                });
+            });
+
+            // Disable framework and addon selections
+            document.querySelectorAll('.addon-item').forEach(item => {
+                if (disable) {
+                    item.style.opacity = '0.5';
+                    item.style.pointerEvents = 'none';
+                    item.classList.remove('selected');
+                } else {
+                    item.style.opacity = '1';
+                    item.style.pointerEvents = 'auto';
+                }
+            });
+
+            if (disable) {
+                selectedServices.framework = null;
+                selectedServices.addons = [];
+            }
+        }
+
+        function calculateTotalCost() {
+            let oneTimeCost = 0;
+            let annualCost = 0;
+            let monthlyCost = 0;
+
+            // Check if bundle is selected
+            if (selectedServices.bundle && selectedServices.bundle.price === 59999) {
+                // Bundle package selected - fixed price
+                annualCost = 59999;
+            } else {
+                // Individual services selected
+                Object.keys(selectedServices).forEach(key => {
+                    if (key === 'addons') return; // Handle addons separately
+                    if (key === 'bundle' && selectedServices[key] && selectedServices[key].price === 0) return; // Skip customized plan
+                    
+                    const service = selectedServices[key];
+                    if (service && service.price > 0) {
+                        if (key === 'development' || key === 'framework') {
+                            oneTimeCost += service.price;
+                        } else if (service.period === 'monthly') {
+                            monthlyCost += service.price;
+                        } else {
+                            annualCost += service.price;
+                        }
+                    }
+                });
+
+                // Handle addons
+                selectedServices.addons.forEach(addon => {
+                    if (addon.period === 'monthly') {
+                        monthlyCost += addon.price;
+                    } else {
+                        annualCost += addon.price;
+                    }
+                });
+            }
+
+            // Calculate total first year cost
+            const totalFirstYear = oneTimeCost + annualCost + (monthlyCost * 12);
+
+            // Update UI
+            document.getElementById('oneTimeCost').textContent = `₹${oneTimeCost.toLocaleString('en-IN')}`;
+            document.getElementById('annualCost').textContent = `₹${annualCost.toLocaleString('en-IN')}`;
+            document.getElementById('monthlyCost').textContent = `₹${monthlyCost.toLocaleString('en-IN')}`;
+            document.getElementById('totalCost').textContent = `₹${totalFirstYear.toLocaleString('en-IN')}`;
+        }
+
+        // Initialize cost calculation
+        calculateTotalCost();
+    </script>
+</body>
+</html>
