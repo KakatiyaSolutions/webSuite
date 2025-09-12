@@ -77,7 +77,8 @@
 
         .feature-list li:before {
             content: "✓";
-            color: #667eea;
+            /* color: #667eea; */
+            color: #00ff0a;
             font-weight: bold;
             position: absolute;
             left: 0;
@@ -302,6 +303,69 @@
                 margin-top: 2rem;
             }
         }
+      
+  .custom-modal {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .btn-close {
+    background: transparent;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+
+  .form-label {
+    font-weight: 500;
+  }
+
+  .form-control {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    transition: border 0.3s;
+  }
+
+  .form-control:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  .modal-footer .btn {
+    min-width: 120px;
+  }
+
+  .btn i {
+    margin-right: 6px;
+  }
+
+
+
+
+  .popular-badge {
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  /* background: var(--warning-color); */
+  background-color: #f32828;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+
     </style>
 </head>
 
@@ -366,7 +430,7 @@
     </div>
 
     <!-- Hidden PDF Template -->
-    <div id="quote-pdf">
+    <!-- <div id="quote-pdf">
         <div class="pdf-header">
             <div>
                 <h2 style="margin: 0">Service Quote</h2>
@@ -375,6 +439,76 @@
             </div>
             <div>
                 <h3>Kakatiya Solutions</h3>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 20px">
+            <p><strong>To,</strong></p>
+            <p style="margin: 0"><strong>Valued Client</strong></p>
+            <p style="margin: 0">Location: Warangal, Telangana</p>
+            <p style="margin: 0"><strong id="clientNameDisplay">Valued Client</strong></p>
+<p style="margin: 0" id="clientAddressDisplay">Location: Warangal, Telangana</p>
+<p style="margin: 0" id="clientPhoneDisplay"></p>
+
+        </div>
+
+        <h4 style="text-align: center; margin: 40px 0 30px">
+            Professional Service Bundles Quotation
+        </h4>
+
+        <table class="pdf-table" id="serviceTable">
+            <thead>
+                <tr>
+                    <th>Service Bundle</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody id="serviceTableBody">
+                
+            </tbody>
+        </table>
+
+        <div style="margin-top: 20px">
+            <p>
+                <strong>Grand Total: ₹<span id="grandTotal">0</span></strong>
+            </p>
+            <p>
+                <strong>Amount in words:</strong>
+                <span id="amountInWords">Zero</span> only
+            </p>
+        </div>
+
+        <p style="margin-top: 40px">
+            Thank you for considering <strong>Kakatiya Solutions</strong> for your
+            business needs.
+        </p>
+
+        <div style="margin-top: 60px; text-align: right">
+            <div>
+                <div style="
+              border-top: 1px solid #000;
+              width: 200px;
+              margin-left: auto;
+              margin-bottom: 5px;
+            "></div>
+                <p style="margin: 0">Authorized Signature</p>
+                <strong>Kakatiya Solutions</strong>
+            </div>
+        </div>
+    </div> -->
+
+   <div id="quote-pdf">
+        <div class="pdf-header">
+            <div>
+                <h2 style="margin: 0">Service Quote</h2>
+                <p style="margin: 5px 0 0">Ref: KAS/IND/QUOTE/2025</p>
+                <p style="margin: 0">Date: <span id="invoice-date"></span></p>
+            </div>
+            <div>
+		<img src="logo1.png" alt="logo"/>
+                <!-- <h3>Kakatiya Solutions</h3> -->
             </div>
         </div>
 
@@ -422,6 +556,7 @@
         </p>
 
         <div style="margin-top: 60px; text-align: right">
+<img src="signature.png" alt="signature" width="100px" height="70px"/>
             <div>
                 <div style="
               border-top: 1px solid #000;
@@ -429,16 +564,16 @@
               margin-left: auto;
               margin-bottom: 5px;
             "></div>
+				
                 <p style="margin: 0">Authorized Signature</p>
                 <strong>Kakatiya Solutions</strong>
             </div>
         </div>
     </div>
-
-
     <!-- Client Details Modal -->
-<div id="clientDetailsModal" class="modal" style="display:none;">
-  <div class="modal-content" style="max-width: 500px; margin: auto; padding: 20px; background: #fff; border-radius: 8px;">
+<div id="clientDetailsModal" class="modal" style="display:none;" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+  <!-- <div class="modal-content" style="max-width: 500px; margin: auto; padding: 20px; background: #fff; border-radius: 8px;">
     <h4>Enter Your Details to Download Quote</h4>
     <div class="form-group">
       <label for="clientName">Full Name</label>
@@ -457,6 +592,52 @@
        <button class="btn btn-primary" onclick="proceedToDownloadQuoteAsImage()"><i class="fa-solid fa-image"></i></button>
       <button class="btn btn-primary" onclick="proceedToDownloadQuoteAsPdf()"><i class="fa-solid fa-file-pdf"></i></button>
     </div>
+  </div> -->
+
+  <div class="modal-content custom-modal" style="max-width: 500px; margin: auto;">
+  <div class="modal-header border-0 pb-0">
+    <h4 class="modal-title">
+      <i class="fa-solid fa-file-signature me-2 text-primary"></i>
+      Download Quote
+    </h4>
+    <button type="button" class="btn-close" aria-label="Close" onclick="closeClientModal()"></button>
+  </div>
+
+  <div class="modal-body pt-2">
+    <p class="text-muted mb-3">Please fill in your details to receive the quote.</p>
+
+    <div class="form-group mb-3">
+      <label for="clientName" class="form-label">Full Name</label>
+      <input type="text" id="clientName" class="form-control" placeholder="e.g., John Doe" required />
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="clientPhone" class="form-label">Phone Number</label>
+      <input type="tel" id="clientPhone" class="form-control" placeholder="e.g., 9876543210" required />
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="clientAddress" class="form-label">Address</label>
+      <textarea id="clientAddress" class="form-control" rows="3" placeholder="Street, City, State" required></textarea>
+    </div>
+  </div>
+
+  <div class="modal-footer border-0 pt-0 justify-content-between">
+    <button class="btn btn-outline-secondary" onclick="closeClientModal()">
+      <i class="fa-solid fa-times me-1"></i> Cancel
+    </button>
+
+    <div>
+      <button class="btn btn-outline-primary me-2" onclick="proceedToDownloadQuoteAsImage()">
+        <i class="fa-solid fa-image me-1"></i> Save as Image
+      </button>
+      <button class="btn btn-primary" onclick="proceedToDownloadQuoteAsPdf()">
+        <i class="fa-solid fa-file-pdf me-1"></i> Save as PDF
+      </button>
+    </div>
+  </div>
+</div>
+
   </div>
 </div>
 
@@ -609,12 +790,31 @@ function proceedToDownloadQuoteAsImage() {
                 avgPrice: 7000,
                 type: "monthly",
                 features: [
+                    "Regular Updates",
                     "Regular backups",
                     "Minor fixes & plugin/theme updates",
                     "2–24 hr SLA (response/resolution time)",
                     "Hosting + domain management",
                 ],
                 icon: "fas fa-server",
+            },
+            {
+                id: "leads",
+                name: "Lead Generation & Campaign",
+                subname:
+                    "Designed to drive leads & conversions with targeted campaigns.<br><em>Perfect for colleges / universities during admissions.</em>",
+                priceRange: "₹1,20,000 – ₹1,80,000 ",
+                avgPrice: 150000,
+                type: "(3 months)",
+                badge:"popular",
+                features: [
+                    "Landing page(s) for lead capture",
+                    "Paid ad campaign management (Google/Meta)",
+                    "4 reels + 4 posts/month",
+                    "Lead-nurturing sequence (email/SMS)",
+                    "Weekly performance reports & optimizations",
+                ],
+                icon: "fas fa-bullhorn",
             },
             {
                 id: "starter",
@@ -668,23 +868,7 @@ function proceedToDownloadQuoteAsImage() {
                 ],
                 icon: "fas fa-chart-line",
             },
-            {
-                id: "leads",
-                name: "Lead Generation & Campaign",
-                subname:
-                    "Designed to drive leads & conversions with targeted campaigns.<br><em>Perfect for universities during admissions.</em>",
-                priceRange: "₹1,20,000 – ₹1,80,000 ",
-                avgPrice: 150000,
-                type: "(3 months)",
-                features: [
-                    "Landing page(s) for lead capture",
-                    "Paid ad campaign management (Google/Meta)",
-                    "4 reels + 4 posts/month",
-                    "Lead-nurturing sequence (email/SMS)",
-                    "Weekly performance reports & optimizations",
-                ],
-                icon: "fas fa-bullhorn",
-            },
+            
             {
                 id: "app",
                 name: "App + Software Builder",
@@ -711,34 +895,62 @@ function proceedToDownloadQuoteAsImage() {
             container.innerHTML = "";
 
             bundles.forEach((bundle) => {
-                const cardHTML = `
-                    <div class="col-md-6 mb-4">
-                        <div class="card bundle-card">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">
-                                    <i class="${bundle.icon}"></i> ${bundle.name
-                    }
-                                </h5>
-                                <div class="price-badge">${bundle.priceRange} ${bundle.type !== "one-time" ? "/" + bundle.type : bundle.type
-                    }</div>
-                            </div>
-                            <div class="card-body">
-                                <ul class="feature-list">
-                                    ${bundle.features
-                        .map((feature) => `<li>${feature}</li>`)
-                        .join("")}
-                                </ul>
-                                <button class="btn btn-add-to-cart mt-3" onclick="addToCart('${bundle.id
-                    }')">
-                                    <i class="fas fa-plus"></i> Add to Cart
-                                </button>
-                                  <small class="text-muted d-block mt-3"><em>${bundle.subname}</em></small>
-                            </div>
+                // const cardHTML = `
+                //     <div class="col-md-6 mb-4">
+                //         <div class="card bundle-card">
+                //             <div class="popular-badge">${bundle.badge}</div>
+                //             <div class="card-header">
+                //                 <h5 class="card-title mb-0">
+                //                     <i class="${bundle.icon}"></i> ${bundle.name
+                //     }
+                //                 </h5>
+                //                 <div class="price-badge">${bundle.priceRange} ${bundle.type !== "one-time" ? "/" + bundle.type : bundle.type
+                //     }</div>
+                //             </div>
+                //             <div class="card-body">
+                //                 <ul class="feature-list">
+                //                     ${bundle.features
+                //         .map((feature) => `<li>${feature}</li>`)
+                //         .join("")}
+                //                 </ul>
+                //                 <button class="btn btn-add-to-cart mt-3" onclick="addToCart('${bundle.id
+                //     }')">
+                //                     <i class="fas fa-plus"></i> Add to Cart
+                //                 </button>
+                //                   <small class="text-muted d-block mt-3"><em>${bundle.subname}</em></small>
+                //             </div>
                                
 
-                        </div>
-                    </div>
-                `;
+                //         </div>
+                //     </div>
+                // `;
+
+
+const cardHTML = `
+  <div class="col-md-6 mb-4">
+    <div class="card bundle-card">
+      <div class="card-header">
+        <h5 class="card-title mb-0">
+          <i class="${bundle.icon}"></i> ${bundle.name}
+        </h5>
+        <div class="price-badge">
+          ${bundle.priceRange} ${bundle.type !== "one-time" ? "/" + bundle.type : ""}
+        </div>
+        ${bundle.badge ? `<div class="popular-badge">${bundle.badge}</div>` : ""}
+      </div>
+      <div class="card-body">
+        <ul class="feature-list">
+          ${bundle.features.map((feature) => `<li>${feature}</li>`).join("")}
+        </ul>
+        <button class="btn btn-add-to-cart mt-3" onclick="addToCart('${bundle.id}')">
+          <i class="fas fa-plus"></i> Add to Cart
+        </button>
+       <small class="text-muted d-block mt-3"><em>${bundle.subname}</em></small>
+      </div>
+    </div>
+  </div>
+`;
+
                 container.innerHTML += cardHTML;
             });
 
