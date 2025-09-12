@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kakatiya Solutions - Service Bundles Cart</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #f1f5f9;
+            --accent-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 2rem 0;
+            padding: 2rem;
+        }
+        
+        .bundle-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
+        }
+        
+        .bundle-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 1.5rem;
+            border: none;
+        }
+        
+        .price-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            color: #667eea;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .btn-add-to-cart {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn-add-to-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+        
+        .cart-panel {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            position: sticky;
+            top: 2rem;
+        }
+        
+        .cart-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: -2rem -2rem 2rem -2rem;
+            text-align: center;
+        }
+        
+        .cart-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .cart-item-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cart-item-name {
+            font-weight: 600;
+            color: var(--primary-color);
+            flex-grow: 1;
+        }
+        
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-right: 1rem;
+        }
+        
+        .btn-remove {
+            background: var(--danger-color);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-remove:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .quantity-btn {
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 0.2rem;
+        }
+        
+        .total-section {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #059669 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .empty-cart {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            padding: 2rem 0;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+        
+        .page-header h1 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .page-header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        .btn-export {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #3b82f6 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.25rem;
+        }
+        
+        .btn-export:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+            color: white;
+        }
+
+        /* Hidden PDF Template */
+        #quote-pdf {
+            display: none;
+            width: 800px;
+            padding: 40px;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            color: #000;
+            background: white;
+        }
+
+        .pdf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .pdf-table th,
+        .pdf-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .pdf-table th {
+            background-color: #f0f0f0;
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            
+            .cart-panel {
+                position: relative;
+                top: 0;
+                margin-top: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-container">
+            <div class="page-header">
+                <h1><i class="fas fa-shopping-cart"></i> Kakatiya Solutions</h1>
+                <p>Professional Service Bundles - Add Multiple Services to Your Cart</p>
+            </div>
+            
+            <div class="row">
+                <!-- Left Column - Bundle Cards -->
+                <div class="col-lg-8">
+                    <div class="row" id="bundleCards">
+                        <!-- Bundle cards will be dynamically generated here -->
+                    </div>
+                </div>
+                
+                <!-- Right Column - Cart Panel -->
+                <div class="col-lg-4">
+                    <div class="cart-panel">
+                        <div class="cart-header">
+                            <h4><i class="fas fa-shopping-cart"></i> Your Cart</h4>
+                            <span id="cartCount" class="badge bg-light text-dark">0 items</span>
+                        </div>
+                        <div id="cartItems">
+                            <div class="empty-cart">
+                                <i class="fas fa-shopping-cart fa-3x mb-3"></i>
+                                <p>Your cart is empty<br>Add bundles to get started</p>
+                            </div>
+                        </div>
+                        <div class="total-section" id="totalSection" style="display: none;">
+                            <h5 class="mb-2">Total Amount</h5>
+                            <h3 class="mb-0" id="totalAmount">₹0</h3>
+                            <small>*Excluding taxes</small>
+                        </div>
+                        <div class="mt-3 d-grid gap-2" id="exportButtons" style="display: none;">
+                            <button class="btn btn-export" onclick="exportQuoteAsPDF()">
+                                <i class="fas fa-file-pdf"></i> Download PDF Quote
+                            </button>
+                            <button class="btn btn-export" onclick="saveQuoteAsImage()">
+                                <i class="fas fa-image"></i> Save as Image
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="clearCart()">
+                                <i class="fas fa-trash"></i> Clear Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden PDF Template -->
+    <div id="quote-pdf">
+        <div class="pdf-header">
+            <div>
+                <h2 style="margin: 0;">Service Quote</h2>
+                <p style="margin: 5px 0 0;">Ref: KAS/IND/QUOTE/2025</p>
+                <p style="margin: 0;">Date: <span id="invoice-date"></span></p>
+            </div>
+            <div>
+                <h3>Kakatiya Solutions</h3>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <p><strong>To,</strong></p>
+            <p style="margin: 0;"><strong>Valued Client</strong></p>
+            <p style="margin: 0;">Location: Warangal, Telangana</p>
+        </div>
+
+        <h4 style="text-align: center; margin: 40px 0 30px;">Professional Service Bundles Quotation</h4>
+
+        <table class="pdf-table" id="serviceTable">
+            <thead>
+                <tr>
+                    <th>Service Bundle</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody id="serviceTableBody">
+                <!-- Dynamic rows will be added here -->
+            </tbody>
+        </table>
+
+        <div style="margin-top: 20px;">
+            <p><strong>Grand Total: ₹<span id="grandTotal">0</span></strong></p>
+            <p><strong>Amount in words:</strong> <span id="amountInWords">Zero</span> only</p>
+        </div>
+
+        <p style="margin-top: 40px;">Thank you for considering <strong>Kakatiya Solutions</strong> for your business needs.</p>
+
+        <div style="margin-top: 60px; text-align: right;">
+            <div>
+                <div style="border-top: 1px solid #000; width: 200px; margin-left: auto; margin-bottom: 5px;"></div>
+                <p style="margin: 0;">Authorized Signature</p>
+                <strong>Kakatiya Solutions</strong>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        // Bundle data with unique IDs
+        const bundles = [
+            {
+                id: 'starter',
+                name: 'Starter Web Presence',
+                priceRange: '₹25,000 - ₹35,000',
+                avgPrice: 30000,
+                type: 'one-time',
+                features: [
+                    'Basic static website (up to 5 pages)',
+                    'Logo & branding design (basic)',
+                    'Domain registration + hosting (1 year)',
+                    'Basic SEO setup',
+                    '1 revision round'
+                ],
+                icon: 'fas fa-rocket'
+            },
+            {
+                id: 'digital',
+                name: 'Digital Launch Kit',
+                priceRange: '₹70,000 - ₹1,20,000',
+                avgPrice: 95000,
+                type: 'one-time',
+                features: [
+                    'Responsive website (5-8 pages or small e-commerce)',
+                    'Logo + brand assets',
+                    'Social media profile graphics',
+                    'Domain + hosting + SSL',
+                    'Initial SEO + Google My Business listing',
+                    '1 short promo video or reel',
+                    'Basic digital marketing plan (content calendar)'
+                ],
+                icon: 'fas fa-globe'
+            },
+            {
+                id: 'growth',
+                name: 'Growth Monthly Package',
+                priceRange: '₹40,000 - ₹60,000',
+                avgPrice: 50000,
+                type: 'monthly',
+                features: [
+                    'Website maintenance + hosting',
+                    '8-10 social media posts/month',
+                    '2 reels & stories',
+                    'Monthly SEO work (on-page + off-page basics)',
+                    'Basic email / SMS blasts (1-2 per month)',
+                    'Monthly analytics report'
+                ],
+                icon: 'fas fa-chart-line'
+            },
+            {
+                id: 'leads',
+                name: 'Lead Generation & Campaign',
+                priceRange: '₹1,20,000 - ₹1,80,000',
+                avgPrice: 150000,
+                type: '3-month',
+                features: [
+                    'Landing page(s) for lead capture',
+                    'Paid ad campaigns management (Google / Meta)',
+                    '4 reels + 4 posts/month',
+                    'Lead-nurturing sequence (email/SMS)',
+                    'Weekly performance reporting & optimizations'
+                ],
+                icon: 'fas fa-bullhorn'
+            },
+            {
+                id: 'app',
+                name: 'App+Software Builder',
+                priceRange: '₹2,50,000 - ₹4,00,000',
+                avgPrice: 325000,
+                type: 'one-time',
+                features: [
+                    'Simple Android + iOS app (basic features)',
+                    'Backend / dashboard tools',
+                    'Integration with website',
+                    'Support & bug-fixes for ~1 month post-launch'
+                ],
+                icon: 'fas fa-mobile-alt'
+            }
+        ];
+
+        let cart = [];
+
+        // Generate bundle cards
+        function generateBundleCards() {
+            const container = document.getElementById('bundleCards');
+            container.innerHTML = '';
+
+            bundles.forEach(bundle => {
+                const cardHTML = `
+                    <div class="col-md-6 mb-4">
+                        <div class="card bundle-card">
+                            <div class="card-header">
+                                <h5 class="card-title mb-0">
+                                    <i class="${bundle.icon}"></i> ${bundle.name}
+                                </h5>
+                                <div class="price-badge">${bundle.priceRange} ${bundle.type !== 'one-time' ? '/' + bundle.type : bundle.type}</div>
+                            </div>
+                            <div class="card-body">
+                                <ul class="feature-list">
+                                    ${bundle.features.map(feature => `<li>${feature}</li>`).join('')}
+                                </ul>
+                                <button class="btn btn-add-to-cart mt-3" onclick="addToCart('${bundle.id}')">
+                                    <i class="fas fa-plus"></i> Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        // Add item to cart
+        function addToCart(bundleId) {
+            const bundle = bundles.find(b => b.id === bundleId);
+            const existingItem = cart.find(item => item.id === bundleId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: bundle.id,
+                    name: bundle.name,
+                    price: bundle.avgPrice,
+                    type: bundle.type,
+                    quantity: 1,
+                    features: bundle.features
+                });
+            }
+
+            updateCartDisplay();
+        }
+
+        // Remove item from cart
+        function removeFromCart(bundleId) {
+            cart = cart.filter(item => item.id !== bundleId);
+            updateCartDisplay();
+        }
+
+        // Update item quantity
+        function updateQuantity(bundleId, newQuantity) {
+            if (newQuantity <= 0) {
+                removeFromCart(bundleId);
+                return;
+            }
+
+            const item = cart.find(item => item.id === bundleId);
+            if (item) {
+                item.quantity = newQuantity;
+                updateCartDisplay();
+            }
+        }
+
+        // Clear entire cart
+        function clearCart() {
+            if (cart.length === 0) return;
+            
+            if (confirm('Are you sure you want to clear your cart?')) {
+                cart = [];
+                updateCartDisplay();
+            }
+        }
+
+        // Update cart display
+        function updateCartDisplay() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartCount = document.getElementById('cartCount');
+            const totalSection = document.getElementById('totalSection');
+            const exportButtons = document.getElementById('exportButtons');
+            const totalAmount = document.getElementById('totalAmount');
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart fa-3x mb-3"></i>
+                        <p>Your cart is empty<br>Add bundles to get started</p>
+                    </div>
+                `;
+                cartCount.textContent = '0 items';
+                totalSection.style.display = 'none';
+                exportButtons.style.display = 'none';
+                return;
+            }
+
+            let cartHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                cartHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-header">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">₹${itemTotal.toLocaleString('en-IN')}</div>
+                            <button class="btn-remove" onclick="removeFromCart('${item.id}')">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="updateQuantity('${item.id}', ${item.quantity - 1})">-</button>
+                            <input type="number" class="quantity-input" value="${item.quantity}" 
+                                   onchange="updateQuantity('${item.id}', parseInt(this.value) || 1)" min="1">
+                            <button class="quantity-btn" onclick="updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
+                            <small class="ms-2 text-muted">${item.type}</small>
+                        </div>
+                    </div>
+                `;
+            });
+
+            cartItemsContainer.innerHTML = cartHTML;
+            cartCount.textContent = `${cart.reduce((sum, item) => sum + item.quantity, 0)} items`;
+            totalAmount.textContent = `₹${total.toLocaleString('en-IN')}`;
+            totalSection.style.display = 'block';
+            exportButtons.style.display = 'block';
+        }
+
+        // Export as PDF
+        async function exportQuoteAsPDF() {
+            if (cart.length === 0) {
+                alert('Your cart is empty. Add some bundles first!');
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            
+            // Populate PDF template
+            document.getElementById('invoice-date').textContent = new Date().toLocaleDateString('en-IN');
+            
+            const tableBody = document.getElementById('serviceTableBody');
+            tableBody.innerHTML = '';
+            
+            let grandTotal = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                grandTotal += itemTotal;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.quantity}</td>
+                    <td>₹${item.price.toLocaleString('en-IN')}</td>
+                    <td>₹${itemTotal.toLocaleString('en-IN')}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Add total row
+            const totalRow = document.createElement('tr');
+            totalRow.innerHTML = `
+                <td colspan="3" style="text-align: right; font-weight: bold;">Grand Total:</td>
+                <td style="font-weight: bold;">₹${grandTotal.toLocaleString('en-IN')}</td>
+            `;
+            totalRow.style.backgroundColor = '#f0f0f0';
+            tableBody.appendChild(totalRow);
+            
+            document.getElementById('grandTotal').textContent = grandTotal.toLocaleString('en-IN');
+            document.getElementById('amountInWords').textContent = numberToWordsIndian(grandTotal);
+            
+            const quoteDiv = document.getElementById('quote-pdf');
+            quoteDiv.style.display = 'block';
+            
+            const canvas = await html2canvas(quoteDiv, { scale: 2 });
+            const imgData = canvas.toDataURL('image/png');
+            
+            const pdf = new jsPDF('p', 'pt', 'a4');
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+            
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save(`Kakatiya-Solutions-Quote-${new Date().toISOString().split('T')[0]}.pdf`);
+            
+            quoteDiv.style.display = 'none';
+        }
+
+        // Save as Image
+        async function saveQuoteAsImage() {
+            if (cart.length === 0) {
+                alert('Your cart is empty. Add some bundles first!');
+                return;
+            }
+
+            // Use the same logic as PDF but save as image
+            document.getElementById('invoice-date').textContent = new Date().toLocaleDateString('en-IN');
+            
+            const tableBody = document.getElementById('serviceTableBody');
+            tableBody.innerHTML = '';
+            
+            let grandTotal = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                grandTotal += itemTotal;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.quantity}</td>
+                    <td>₹${item.price.toLocaleString('en-IN')}</td>
+                    <td>₹${itemTotal.toLocaleString('en-IN')}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            const totalRow = document.createElement('tr');
+            totalRow.innerHTML = `
+                <td colspan="3" style="text-align: right; font-weight: bold;">Grand Total:</td>
+                <td style="font-weight: bold;">₹${grandTotal.toLocaleString('en-IN')}</td>
+            `;
+            totalRow.style.backgroundColor = '#f0f0f0';
+            tableBody.appendChild(totalRow);
+            
+            document.getElementById('grandTotal').textContent = grandTotal.toLocaleString('en-IN');
+            document.getElementById('amountInWords').textContent = numberToWordsIndian(grandTotal);
+            
+            const quoteDiv = document.getElementById('quote-pdf');
+            quoteDiv.style.display = 'block';
+            
+            const canvas = await html2canvas(quoteDiv, { scale: 2 });
+            const imgData = canvas.toDataURL('image/png');
+            
+            const link = document.createElement('a');
+            link.href = imgData;
+            link.download = `Kakatiya-Solutions-Quote-${new Date().toISOString().split('T')[0]}.png`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            quoteDiv.style.display = 'none';
+        }
+
+        // Convert number to words (Indian format)
+        function numberToWordsIndian(num) {
+            const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine',
+                'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen',
+                'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+            const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+            if (num === 0) return 'Zero';
+            if (num.toString().length > 9) return 'Overflow';
+
+            const numStr = ('000000000' + num).slice(-9);
+            const crore = parseInt(numStr.slice(0, 2));
+            const lakh = parseInt(numStr.slice(2, 4));
+            const thousand = parseInt(numStr.slice(4, 6));
+            const hundred = parseInt(numStr.slice(6, 7));
+            const tens = parseInt(numStr.slice(7, 9));
+
+            let str = '';
+
+            if (crore) str += (crore < 20) ? a[crore] + ' Crore ' : b[Math.floor(crore / 10)] + ' ' + a[crore % 10] + ' Crore ';
+            if (lakh) str += (lakh < 20) ? a[lakh] + ' Lakh ' : b[Math.floor(lakh / 10)] + ' ' + a[lakh % 10] + ' Lakh ';
+            if (thousand) str += (thousand < 20) ? a[thousand] + ' Thousand ' : b[Math.floor(thousand / 10)] + ' ' + a[thousand % 10] + ' Thousand ';
+            if (hundred) str += a[hundred] + ' Hundred ';
+
+            if (str !== '' && tens) str += 'and ';
+            if (tens) str += (tens < 20) ? a[tens] : b[Math.floor(tens / 10)] + ' ' + a[tens % 10];
+
+            return str.trim();
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            generateBundleCards();
+            updateCartDisplay();
+        });
+    </script>
+</body>
+</html>
