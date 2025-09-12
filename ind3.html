@@ -342,14 +342,21 @@
                             <small>*Excluding taxes</small>
                         </div>
                         <div class="mt-3 d-grid gap-2" id="exportButtons" style="display: none">
-                            <button class="btn btn-export" onclick="exportQuoteAsPDF()">
+                            <!-- <button class="btn btn-export" onclick="exportQuoteAsPDF()">
                                 <i class="fas fa-file-pdf"></i> Download PDF Quote
                             </button>
                             <button class="btn btn-export" onclick="saveQuoteAsImage()">
                                 <i class="fas fa-image"></i> Save as Image
+                            </button> -->
+
+                            <button class="btn btn-export" onclick="exportQuoteAsPDF()">
+                                <i class="fas fa-file-pdf"></i> Download PDF Quote
+                            </button>
+                            <button class="btn btn-export" onclick="showClientDetailsModal()">
+                                <i class="fas fa-image"></i> Save as Image
                             </button>
                             <button class="btn btn-outline-danger" onclick="clearCart()">
-                                <i class="fas fa-trash"></i> Clear Cart
+                                <i class="fas fa-trash"></i> Clear Cart 
                             </button>
                         </div>
                     </div>
@@ -373,8 +380,12 @@
 
         <div style="margin-bottom: 20px">
             <p><strong>To,</strong></p>
-            <p style="margin: 0"><strong>Valued Client</strong></p>
-            <p style="margin: 0">Location: Warangal, Telangana</p>
+            <!-- <p style="margin: 0"><strong>Valued Client</strong></p>
+            <p style="margin: 0">Location: Warangal, Telangana</p> -->
+            <p style="margin: 0"><strong id="clientNameDisplay">Valued Client</strong></p>
+<p style="margin: 0" id="clientAddressDisplay">Location: Warangal, Telangana</p>
+<p style="margin: 0" id="clientPhoneDisplay"></p>
+
         </div>
 
         <h4 style="text-align: center; margin: 40px 0 30px">
@@ -423,6 +434,31 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Client Details Modal -->
+<div id="clientDetailsModal" class="modal" style="display:none;">
+  <div class="modal-content" style="max-width: 500px; margin: auto; padding: 20px; background: #fff; border-radius: 8px;">
+    <h4>Enter Your Details to Download Quote</h4>
+    <div class="form-group">
+      <label for="clientName">Full Name</label>
+      <input type="text" id="clientName" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label for="clientPhone">Phone Number</label>
+      <input type="tel" id="clientPhone" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label for="clientAddress">Address</label>
+      <textarea id="clientAddress" class="form-control" rows="2" required></textarea>
+    </div>
+    <div class="text-end mt-3">
+      <button class="btn btn-secondary" onclick="closeClientModal()">Cancel</button>
+       <button class="btn btn-primary" onclick="proceedToDownloadQuoteAsImage()"><i class="fa-solid fa-image"></i></button>
+      <button class="btn btn-primary" onclick="proceedToDownloadQuoteAsPdf()"><i class="fa-solid fa-file-pdf"></i></button>
+    </div>
+  </div>
+</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -517,6 +553,51 @@
         //         icon: 'fas fa-mobile-alt'
         //     }
         // ];
+function showClientDetailsModal() {
+    document.getElementById("clientDetailsModal").style.display = "block";
+}
+
+function closeClientModal() {
+    document.getElementById("clientDetailsModal").style.display = "none";
+}
+
+function proceedToDownloadQuoteAsPdf() {
+    const name = document.getElementById("clientName").value.trim();
+    const phone = document.getElementById("clientPhone").value.trim();
+    const address = document.getElementById("clientAddress").value.trim();
+
+    if (!name || !phone || !address) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    // Inject into quote
+    document.getElementById("clientNameDisplay").textContent = name;
+    document.getElementById("clientAddressDisplay").textContent = address;
+    document.getElementById("clientPhoneDisplay").textContent = `Phone: ${phone}`;
+
+    closeClientModal();
+    exportQuoteAsPDF(); // Your original functionproceedToDownloadQuoteAsImage
+}
+
+function proceedToDownloadQuoteAsImage() {
+    const name = document.getElementById("clientName").value.trim();
+    const phone = document.getElementById("clientPhone").value.trim();
+    const address = document.getElementById("clientAddress").value.trim();
+
+    if (!name || !phone || !address) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    // Inject into quote
+    document.getElementById("clientNameDisplay").textContent = name;
+    document.getElementById("clientAddressDisplay").textContent = address;
+    document.getElementById("clientPhoneDisplay").textContent = `Phone: ${phone}`;
+
+    closeClientModal();
+    saveQuoteAsImage(); // Your original functionproceedToDownloadQuoteAsImage
+}
 
         const bundles = [
             {
@@ -769,43 +850,97 @@
             let cartHTML = "";
             let total = 0;
 
+            // cart.forEach((item) => {
+            //     const itemTotal = item.price * item.quantity;
+            //     total += itemTotal;
+
+            //     cartHTML += `
+            //         <div class="cart-item">
+            //             <div class="cart-item-header">
+            //                 <div class="cart-item-name">${item.name}</div>
+            //                 <div class="cart-item-price">₹${itemTotal.toLocaleString(
+            //         "en-IN"
+            //     )}</div>
+            //                 <button class="btn-remove" onclick="removeFromCart('${item.id
+            //         }')">
+            //                     <i class="fas fa-times"></i>
+            //                 </button>
+            //             </div>
+            //             <div class="quantity-controls">
+            //                 <button class="quantity-btn" onclick="updateQuantity('${item.id
+            //         }', ${item.quantity - 1})">-</button>
+            //                 <input type="number" class="quantity-input" value="${item.quantity
+            //         }" 
+            //                        onchange="updateQuantity('${item.id
+            //         }', parseInt(this.value) || 1)" min="1">
+            //                 <button class="quantity-btn" onclick="updateQuantity('${item.id
+            //         }', ${item.quantity + 1})">+</button>
+            //                 <small class="ms-2 text-muted">${item.type}</small>
+            //             ${if($item.type === 'monthly')}{
+                        
+            //             add a check box of yearly 
+
+            //             when click on that the quantity of monthly product comes in 12 ok
+                        
+            //             }
+            //             </div>
+            //         </div>
+            //     `;
+            // });
+
             cart.forEach((item) => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
+    const isMonthly = item.type === 'monthly';
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
 
-                cartHTML += `
-                    <div class="cart-item">
-                        <div class="cart-item-header">
-                            <div class="cart-item-name">${item.name}</div>
-                            <div class="cart-item-price">₹${itemTotal.toLocaleString(
-                    "en-IN"
-                )}</div>
-                            <button class="btn-remove" onclick="removeFromCart('${item.id
-                    }')">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        <div class="quantity-controls">
-                            <button class="quantity-btn" onclick="updateQuantity('${item.id
-                    }', ${item.quantity - 1})">-</button>
-                            <input type="number" class="quantity-input" value="${item.quantity
-                    }" 
-                                   onchange="updateQuantity('${item.id
-                    }', parseInt(this.value) || 1)" min="1">
-                            <button class="quantity-btn" onclick="updateQuantity('${item.id
-                    }', ${item.quantity + 1})">+</button>
-                            <small class="ms-2 text-muted">${item.type}</small>
-                        ${if($item.type === 'monthly')}{
-                        
-                        add a check box of yearly 
+    cartHTML += `
+        <div class="cart-item mb-3 p-2 border rounded">
+            <div class="cart-item-header d-flex justify-content-between align-items-center">
+                <div class="cart-item-name fw-bold">${item.name}</div>
+                <div class="cart-item-price text-success">₹${itemTotal.toLocaleString("en-IN")}</div>
+                <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart('${item.id}')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
 
-                        when click on that the quantity of monthly product comes in 12 ok
-                        
-                        }
-                        </div>
+            <div class="quantity-controls mt-2 d-flex align-items-center">
+                <button class="quantity-btn btn btn-sm btn-light" onclick="updateQuantity('${item.id}', ${item.quantity - 1})">-</button>
+                
+                <input type="number" 
+                       class="quantity-input form-control form-control-sm mx-2"
+                       value="${item.quantity}" 
+                       onchange="updateQuantity('${item.id}', parseInt(this.value) || 1)" 
+                       min="1" style="width: 60px;">
+                
+                <button class="quantity-btn btn btn-sm btn-light" onclick="updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
+                
+                <small class="ms-2 text-muted">${item.type}</small>
+
+                ${isMonthly ? `
+                    <div class="form-check ms-3">
+                        <input class="form-check-input" type="checkbox" id="yearly-${item.id}" 
+                            onchange="toggleYearlyBilling('${item.id}', this.checked)" ${item.quantity === 12 ? 'checked' : ''}>
+                        <label class="form-check-label" for="yearly-${item.id}">
+                            Bill Yearly
+                        </label>
                     </div>
-                `;
-            });
+                ` : ''}
+            </div>
+        </div>
+    `;
+});
+
+
+
+// function toggleYearlyBilling(itemId, isYearly) {
+//     const item = cart.find(i => i.id === itemId);
+//     if (!item) return;
+
+//     item.quantity = isYearly ? 12 : 1;
+
+//     updateCart(); // re-render cart and recalculate totals
+// }
+
 
             cartItemsContainer.innerHTML = cartHTML;
             cartCount.textContent = `${cart.reduce(
@@ -816,6 +951,16 @@
             totalSection.style.display = "block";
             exportButtons.style.display = "block";
         }
+function toggleYearlyBilling(bundleId, isYearly) {
+    const item = cart.find((item) => item.id === bundleId);
+    if (!item) return;
+
+    // Set quantity to 12 if yearly billing is selected, else revert to 1
+    item.quantity = isYearly ? 12 : 1;
+
+    // Re-render the cart UI
+    updateCartDisplay();
+}
 
         // Export as PDF
         async function exportQuoteAsPDF() {
