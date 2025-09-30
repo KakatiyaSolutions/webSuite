@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kakatiya Solutions - Service Bundles Cart</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #f1f5f9;
+            --accent-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 2rem 0;
+            padding: 2rem;
+        }
+
+        .bundle-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
+            position: relative;
+        }
+
+        .bundle-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 1.5rem;
+            border: none;
+        }
+
+        .price-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            color: #00ff0a;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .btn-add-to-cart {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-add-to-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+
+        .cart-panel {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .cart-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: -2rem -2rem 2rem -2rem;
+            text-align: center;
+        }
+
+        .cart-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background-color: #f32828;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .total-section {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #059669 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            padding: 2rem 0;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn-export {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #3b82f6 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            .cart-panel {
+                position: relative;
+                top: 0;
+                margin-top: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-container">
+            <div class="page-header">
+                <h1><i class="fas fa-shopping-cart"></i> Kakatiya Solutions</h1>
+                <p>Professional Service Bundles - Choose the Perfect Package for Your Business</p>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Website Maintenance Section -->
+                    <div class="mb-5">
+                        <h3 class="mb-4 text-center">
+                            <i class="fas fa-laptop-code me-2"></i>
+                            <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                Website Maintenance Services
+                            </span>
+                        </h3>
+                        <div class="row" id="websiteCards"></div>
+                    </div>
+
+                    <!-- Social Media Section -->
+                    <div class="mb-4">
+                        <h3 class="mb-4 text-center">
+                            <i class="fas fa-share-alt me-2"></i>
+                            <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                                Social Media Management Services
+                            </span>
+                        </h3>
+                        <div class="row" id="socialCards"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="cart-panel">
+                        <div class="cart-header">
+                            <h4><i class="fas fa-shopping-cart"></i> Your Cart</h4>
+                            <span id="cartCount" class="badge bg-light text-dark">0 items</span>
+                        </div>
+                        <div id="cartItems">
+                            <div class="empty-cart">
+                                <i class="fas fa-shopping-cart fa-3x mb-3"></i>
+                                <p>Your cart is empty<br />Add services to get started</p>
+                            </div>
+                        </div>
+                        <div class="total-section" id="totalSection" style="display: none">
+                            <h5 class="mb-2">Total Amount</h5>
+                            <h3 class="mb-0" id="totalAmount">₹0</h3>
+                            <small>*Excluding taxes</small>
+                        </div>
+                        <div class="mt-3 d-grid gap-2" id="exportButtons" style="display: none">
+                            <button class="btn btn-export" onclick="generateQuote()">
+                                <i class="fas fa-file-invoice"></i> Generate Quote
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="clearCart()">
+                                <i class="fas fa-trash"></i> Clear Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const websiteBundles = [
+            {
+                id: "basic-maintenance",
+                name: "Basic Website Maintenance",
+                subname: "Essential upkeep for small websites",
+                priceRange: "₹5,000",
+                avgPrice: 5000,
+                type: "monthly",
+                category: "website",
+                features: [
+                    "Monthly security updates",
+                    "Basic plugin updates",
+                    "Weekly backups",
+                    "Minor content changes (up to 2 hours/month)",
+                    "24-48 hour response time",
+                    "Uptime monitoring"
+                ],
+                icon: "fas fa-tools"
+            },
+            {
+                id: "standard-maintenance",
+                name: "Standard Website Maintenance",
+                subname: "Comprehensive care for growing businesses",
+                priceRange: "₹8,000",
+                avgPrice: 8000,
+                type: "monthly",
+                category: "website",
+                badge: "Popular",
+                features: [
+                    "All Basic features included",
+                    "Priority security patches",
+                    "Daily backups with 30-day retention",
+                    "Content updates (up to 5 hours/month)",
+                    "Performance optimization",
+                    "12-24 hour response time",
+                    "Monthly analytics report"
+                ],
+                icon: "fas fa-server"
+            },
+            {
+                id: "advanced-maintenance",
+                name: "Advanced Website Maintenance",
+                subname: "Premium support with dedicated attention",
+                priceRange: "₹15,000",
+                avgPrice: 15000,
+                type: "monthly",
+                category: "website",
+                features: [
+                    "All Standard features included",
+                    "Proactive security monitoring",
+                    "Real-time backups",
+                    "Unlimited content updates",
+                    "Advanced performance optimization",
+                    "Priority 4-8 hour response time",
+                    "SEO maintenance & monitoring",
+                    "Bi-weekly detailed reports",
+                    "Dedicated account manager"
+                ],
+                icon: "fas fa-shield-alt"
+            }
+        ];
+
+        const socialBundles = [
+            {
+                id: "standard-social",
+                name: "Standard Social Media Handle",
+                subname: "Build your brand presence steadily",
+                priceRange: "₹12,000",
+                avgPrice: 12000,
+                type: "monthly",
+                category: "social",
+                features: [
+                    "1 video shoot/reel per month (content by client)",
+                    "2 creative posters monthly",
+                    "3 custom poster designs weekly",
+                    "Daily followups & engagement",
+                    "Hashtag research",
+                    "Basic analytics report"
+                ],
+                icon: "fas fa-hashtag"
+            },
+            {
+                id: "advanced-social",
+                name: "Advanced Social Media Handle",
+                subname: "Complete social media management across all platforms",
+                priceRange: "₹25,000",
+                avgPrice: 25000,
+                type: "monthly",
+                category: "social",
+                badge: "Popular",
+                features: [
+                    "All platforms managed (Facebook, Instagram, LinkedIn, Twitter)",
+                    "2 video shoots/reels per month (content by client)",
+                    "4 creative posters monthly",
+                    "5 custom poster designs weekly",
+                    "Daily followups & active engagement",
+                    "Trending hashtag integration",
+                    "12-14 festive banners annually",
+                    "Brand popularity campaigns",
+                    "Detailed monthly analytics",
+                    "Content calendar planning"
+                ],
+                icon: "fas fa-rocket"
+            }
+        ];
+
+        const bundles = [...websiteBundles, ...socialBundles];
+        let cart = [];
+
+        function generateBundleCards() {
+            const websiteContainer = document.getElementById("websiteCards");
+            const socialContainer = document.getElementById("socialCards");
+            
+            websiteContainer.innerHTML = "";
+            socialContainer.innerHTML = "";
+
+            websiteBundles.forEach((bundle) => {
+                websiteContainer.innerHTML += createCardHTML(bundle);
+            });
+
+            socialBundles.forEach((bundle) => {
+                socialContainer.innerHTML += createCardHTML(bundle);
+            });
+        }
+
+        function createCardHTML(bundle) {
+            return `
+                <div class="col-md-6 mb-4">
+                    <div class="card bundle-card">
+                        ${bundle.badge ? `<div class="popular-badge">${bundle.badge}</div>` : ""}
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">
+                                <i class="${bundle.icon}"></i> ${bundle.name}
+                            </h5>
+                            <div class="price-badge">
+                                ${bundle.priceRange} / ${bundle.type}
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <small class="text-muted d-block mb-3"><em>${bundle.subname}</em></small>
+                            <ul class="feature-list">
+                                ${bundle.features.map(f => `<li>${f}</li>`).join("")}
+                            </ul>
+                            <button class="btn btn-add-to-cart mt-3" onclick="addToCart('${bundle.id}')">
+                                <i class="fas fa-plus"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function addToCart(bundleId) {
+            const bundle = bundles.find((b) => b.id === bundleId);
+            const existingItem = cart.find((item) => item.id === bundleId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: bundle.id,
+                    name: bundle.name,
+                    price: bundle.avgPrice,
+                    type: bundle.type,
+                    quantity: 1
+                });
+            }
+            updateCartDisplay();
+        }
+
+        function removeFromCart(bundleId) {
+            cart = cart.filter((item) => item.id !== bundleId);
+            updateCartDisplay();
+        }
+
+        function updateQuantity(bundleId, newQuantity) {
+            if (newQuantity <= 0) {
+                removeFromCart(bundleId);
+                return;
+            }
+            const item = cart.find((item) => item.id === bundleId);
+            if (item) {
+                item.quantity = newQuantity;
+                updateCartDisplay();
+            }
+        }
+
+        function toggleYearlyBilling(bundleId, isYearly) {
+            const item = cart.find((item) => item.id === bundleId);
+            if (!item) return;
+            item.quantity = isYearly ? 12 : 1;
+            updateCartDisplay();
+        }
+
+        function clearCart() {
+            if (cart.length === 0) return;
+            if (confirm("Are you sure you want to clear your cart?")) {
+                cart = [];
+                updateCartDisplay();
+            }
+        }
+
+        function updateCartDisplay() {
+            const cartItemsContainer = document.getElementById("cartItems");
+            const cartCount = document.getElementById("cartCount");
+            const totalSection = document.getElementById("totalSection");
+            const exportButtons = document.getElementById("exportButtons");
+            const totalAmount = document.getElementById("totalAmount");
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart fa-3x mb-3"></i>
+                        <p>Your cart is empty<br>Add services to get started</p>
+                    </div>
+                `;
+                cartCount.textContent = "0 items";
+                totalSection.style.display = "none";
+                exportButtons.style.display = "none";
+                return;
+            }
+
+            let cartHTML = "";
+            let total = 0;
+
+            cart.forEach((item) => {
+                const isMonthly = item.type === 'monthly';
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                cartHTML += `
+                    <div class="cart-item mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="fw-bold text-primary">${item.name}</div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-success fw-bold">₹${itemTotal.toLocaleString("en-IN")}</span>
+                                <button class="btn btn-sm btn-danger" onclick="removeFromCart('${item.id}')">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <button class="btn btn-sm btn-outline-primary" onclick="updateQuantity('${item.id}', ${item.quantity - 1})">-</button>
+                            <input type="number" class="form-control form-control-sm text-center" style="width: 60px;" 
+                                   value="${item.quantity}" onchange="updateQuantity('${item.id}', parseInt(this.value) || 1)" min="1">
+                            <button class="btn btn-sm btn-outline-primary" onclick="updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
+                            <small class="text-muted ms-2">${item.type}</small>
+                            ${isMonthly ? `
+                                <div class="form-check ms-2">
+                                    <input class="form-check-input" type="checkbox" id="yearly-${item.id}" 
+                                        onchange="toggleYearlyBilling('${item.id}', this.checked)" ${item.quantity === 12 ? 'checked' : ''}>
+                                    <label class="form-check-label small" for="yearly-${item.id}">Yearly</label>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+
+            cartItemsContainer.innerHTML = cartHTML;
+            cartCount.textContent = `${cart.reduce((sum, item) => sum + item.quantity, 0)} items`;
+            totalAmount.textContent = `₹${total.toLocaleString("en-IN")}`;
+            totalSection.style.display = "block";
+            exportButtons.style.display = "block";
+        }
+
+        function generateQuote() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            alert("Quote generation feature coming soon! Your cart contains " + cart.length + " item(s).");
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            generateBundleCards();
+            updateCartDisplay();
+        });
+    </script>
+</body>
+</html>
