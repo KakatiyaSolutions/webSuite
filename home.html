@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kakatiya Solutions - Choose Your Plan</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            /* background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%); */
+            background-color: #0e2045;
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #e50914;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .header-benefits {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .benefit {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #b3b3b3;
+        }
+
+        .benefit i {
+            color: #e50914;
+            font-size: 1.2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 60px 0 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #e50914, #ff6b6b);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .plans-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .plan-card {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 20px;
+            padding: 40px 30px;
+            position: relative;
+            border: 2px solid transparent;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .plan-card:hover {
+            transform: translateY(-10px);
+            border-color: #e50914;
+            box-shadow: 0 20px 60px rgba(229, 9, 20, 0.3);
+        }
+
+        .plan-card.popular {
+            border-color: #e50914;
+            background: rgba(40, 40, 40, 0.9);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            background: linear-gradient(135deg, #e50914, #ff4444);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(229, 9, 20, 0.5);
+        }
+
+        .plan-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .plan-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #e50914;
+            margin-bottom: 5px;
+        }
+
+        .plan-period {
+            color: #b3b3b3;
+            font-size: 0.95rem;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .feature-icon.check {
+            background: rgba(229, 9, 20, 0.2);
+            color: #e50914;
+        }
+
+        .feature-icon.cross {
+            background: rgba(255, 255, 255, 0.1);
+            color: #666;
+        }
+
+        .feature-text {
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .feature-text.disabled {
+            color: #666;
+            text-decoration: line-through;
+        }
+
+        .cta-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #e50914, #ff4444);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(229, 9, 20, 0.4);
+        }
+
+        .festive-section {
+            background: rgba(40, 40, 40, 0.8);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            border: 2px solid rgba(229, 9, 20, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .festive-section h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #e50914;
+        }
+
+        .festive-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .festive-feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .festive-feature i {
+            font-size: 3rem;
+            color: #e50914;
+            margin-bottom: 10px;
+        }
+
+        .festive-feature h4 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .festive-feature p {
+            color: #b3b3b3;
+        }
+
+        @media (max-width: 768px) {
+            .plans-container {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .plan-price {
+                font-size: 2rem;
+            }
+
+            .festive-content {
+                flex-direction: column;
+            }
+        }
+
+        .feature-highlight {
+            font-weight: 600;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo"><img src="brandally_logo.png" alt="Logo of Brandally" class="img-fluid"></div>
+                <span class="text-danger">A proud subsidiary of Kakatiya Solutions Pvt. Ltd.</span>
+            <h1>Choose a plan designed to grow your business</h1>
+            <div class="header-benefits">
+                <div class="benefit">
+            <i class="fas fa-check-circle"></i>
+            <span>Professional-grade quality assured</span>
+        </div>
+        <div class="benefit">
+            <i class="fas fa-check-circle"></i>
+            <span>Scalable solutions for growing teams</span>
+        </div>
+        <div class="benefit">
+            <i class="fas fa-check-circle"></i>
+            <span>Expert support whenever you need it</span>
+        </div>
+            </div>
+        </div>
+
+        <!-- Web Development Section -->
+        <h2 class="section-title">Web Design & Development</h2>
+        <div class="plans-container">
+            <!-- Standard Web Plan -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h3 class="plan-name">Standard</h3>
+                    <div class="plan-price">₹15,000</div>
+                    <div class="plan-period">One-time setup + Monthly maintenance</div>
+                </div>
+                <ul class="features-list">
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text"><span class="feature-highlight">Regular Themes/Layouts</span></div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Up to <span class="feature-highlight">5 Web Pages</span></div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">HTML5, CSS3, JS, Bootstrap</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Regular Monthly Updates (1/month)</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Enquiry Form with Email Integration</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">1st Year Domain + Hosting Included</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Free SSL Encryption</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">5 Free Malware Scans</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Basic SEO Plugin Setup</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">XML Sitemap Generation</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Google Location Map Integration</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Basic Contact Form</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">8-12 hours Response Time</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Uptime Monitoring</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Monthly Backups</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Limited Storage</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon cross"><i class="fas fa-times"></i></div>
+                        <div class="feature-text disabled">Log Monitoring</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon cross"><i class="fas fa-times"></i></div>
+                        <div class="feature-text disabled">Customized Layouts</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon cross"><i class="fas fa-times"></i></div>
+                        <div class="feature-text disabled">CMS Integration</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon cross"><i class="fas fa-times"></i></div>
+                        <div class="feature-text disabled">Chatbot Integration</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon cross"><i class="fas fa-times"></i></div>
+                        <div class="feature-text disabled">Advanced Analytics</div>
+                    </li>
+                    
+                </ul>
+                <button class="cta-button">Choose Plan</button>
+            </div>
+
+            <!-- Premium Web Plan -->
+            <div class="plan-card popular">
+                <div class="popular-badge">
+                    <i class="fas fa-fire"></i> Popular
+                </div>
+                <div class="plan-header">
+                    <h3 class="plan-name">Premium</h3>
+                    <div class="plan-price">₹25,000</div>
+                    <div class="plan-period">One-time setup + Monthly maintenance</div>
+                </div>
+                <ul class="features-list">
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text"><span class="feature-highlight">Fully Customized Layouts</span></div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Up to <span class="feature-highlight">5+ Web Pages</span></div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">HTML5, CSS3, JS, Bootstrap + Advanced Frameworks</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Unlimited Content Updates</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Dynamic Contact Form with Captcha</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">1st Year Domain + Hosting Included</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Free SSL + Advanced Security</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Unlimited Malware Scans</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Log Monitoring</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Advanced SEO Plugin + Optimization</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">XML Sitemap + SEO Monitoring</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Google Location Map + Schema Markup</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Full CMS Integration</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text"><span class="feature-highlight">2-6 hours Priority Response Time</span></div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Performance Optimization</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">24/7 Uptime Monitoring</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Weekly Backups</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Dedicated Web Professional Manager</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Unlimited Storage</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Chatbot Integration</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Site Analytics Dashboard</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Priority Support 12/7</div>
+                    </li>
+                </ul>
+                <button class="cta-button">Choose Plan</button>
+            </div>
+        </div>
+
+        <!-- Social Media Section -->
+        <h2 class="section-title">Social Media Management</h2>
+        <div class="plans-container">
+            <!-- Standard SM Plan -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h3 class="plan-name">Standard</h3>
+                    <div class="plan-price">₹12,000</div>
+                    <div class="plan-period">per 3 months</div>
+                </div>
+                <ul class="features-list">
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Hashtag Research + Keywords</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">SM Page/Account Creation</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Page Optimization</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Community Management</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">2 Platforms (Facebook & Instagram)</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">1 Video Shoot/Reel per Month</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">2 Creative Poster Designs Monthly</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">General Post Managing</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Daily Followups & Engagement</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Basic Analytics Reports</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon cross"><i class="fas fa-times"></i></div>
+                        <div class="feature-text disabled">LinkedIn & Twitter Management</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon cross"><i class="fas fa-times"></i></div>
+                        <div class="feature-text disabled">Content Calendar Planning</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon cross"><i class="fas fa-times"></i></div>
+                        <div class="feature-text disabled">Trending Hashtag Integration</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon cross"><i class="fas fa-times"></i></div>
+                        <div class="feature-text disabled">Advanced Branding & Strategy</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon cross"><i class="fas fa-times"></i></div>
+                        <div class="feature-text disabled">Paid Ads & Campaigns</div>
+                    </li>
+                </ul>
+                <button class="cta-button">Choose Plan</button>
+            </div>
+
+            <!-- Premium SM Plan -->
+            <div class="plan-card popular">
+                <div class="popular-badge">
+                    <i class="fas fa-fire"></i> Popular
+                </div>
+                <div class="plan-header">
+                    <h3 class="plan-name">Premium</h3>
+                    <div class="plan-price">₹25,000</div>
+                    <div class="plan-period">per 3 months</div>
+                </div>
+                <ul class="features-list">
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Advanced Hashtag Research + Keywords</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Multi-Platform Account Creation & Setup</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Advanced Page Optimization</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Full Community Management</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text"><span class="feature-highlight">All Platforms</span> (FB, Instagram, LinkedIn, Twitter)</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Content Calendar Planning</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Trending Hashtag Integration</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">2 Video Shoots/Reels per Month</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">4 Creative Poster Designs Monthly</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Premium Post Management & Scheduling</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Daily Followups & Active Engagement</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Detailed Analytics & Insights</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Advanced Branding & Strategy Development</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text">Paid Ads & Campaigns Management</div>
+                    </li>
+                    <li class="feature-item">
+                        <div class="feature-icon check"><i class="fas fa-check"></i></div>
+                        <div class="feature-text"><span class="feature-highlight">Priority Support</span> (2-6 hrs response, 12/7)</div>
+                    </li>
+                </ul>
+                <button class="cta-button">Choose Plan</button>
+            </div>
+        </div>
+
+        <!-- Festive Banner Section -->
+        <div class="festive-section">
+            <h3><i class="fas fa-gift"></i> Festive Banner Designs</h3>
+            <p style="color: #b3b3b3; margin-bottom: 30px;">Make every festival memorable with stunning custom designs</p>
+            <div class="festive-content">
+                <div class="festive-feature">
+                   <i class="fa-solid fa-calendar-days"></i>
+                    <h4>12-14 Banners</h4>
+                    <p>Custom designs per year</p>
+                </div>
+                <div class="festive-feature">
+                    <i class="fas fa-palette"></i>
+                    <h4>All Festivals</h4>
+                    <p>Diwali, Christmas, Eid & more</p>
+                </div>
+                <div class="festive-feature">
+                    <i class="fas fa-rocket"></i>
+                    <h4>Quick Delivery</h4>
+                    <p>Ready before the festival</p>
+                </div>
+                <div class="festive-feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h4>Multi-Format</h4>
+                    <p>Social media ready sizes</p>
+                </div>
+            </div>
+            <div style="margin-top: 40px;">
+                <div class="plan-price" style="margin-bottom: 10px;">₹3,000</div>
+                <div class="plan-period">per year</div>
+                <button class="cta-button" style="max-width: 400px; margin: 30px auto 0;">Add Festive Package</button>
+            </div>
+        </div>
+    </div>
+</body>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</html>
